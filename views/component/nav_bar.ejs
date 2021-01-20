@@ -1,0 +1,172 @@
+
+<!-- start nav -->
+<nav class="navbar navbar-expand-lg navbar-light" >
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">شركة الهدي للمفروشات</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          
+          <%if(user.role =='accounter'){%>
+           <!-- <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">دفاتر اليومية</a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" href="/accounting">الحسابات </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="#">العملاء</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/accounting">الحسابات</a>
+          </li> -->
+          <%}%>
+         <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              عمليات
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/singup">اختيار1</a></li>
+              <li><a class="dropdown-item" href="#">اختيار2</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">اختيار3</a></li>
+            </ul>
+          </li> -->
+
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">تسجيل الدخول</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/singup">تسجيل حساب جديد</a>
+            </li> -->
+            <!-- <li class="nav-item">
+              <a class="nav-link " href="/about" tabindex="-1" aria-disabled="true">من نحن</a>
+            </li> -->
+            
+           </ul>
+
+        <%if(user.firstName){%>
+        <div class="me-2">
+          <div class="badge bg-warning text-dark"><%=user.firstName%> <%=user.lastName%></div> 
+        </div>
+        <div class="me-2">
+          <a class="badge bg-danger text-dark" href="/logout">تسجيل خروج</a>
+        </div>
+      <%}else{%>
+      <div class="me-2 ">
+        <a class="badge  bg-light text-dark" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">تسجيل الدخول</a>
+      </div>
+      <div class="me-2 ">
+        <a class="badge  bg-light text-dark" href="/singup">تسجيل حساب جديد</a>
+      </div>
+        <%}%>
+        <!-- <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">بحث</button>
+        </form> -->
+
+      </div>
+    </div>
+  </nav>
+<!-- End nav -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">تسجيل دخول</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="login-form">
+          <div class="mb-3">
+            <div id="err_msg" >   
+            </div>
+            <label for="email" class="form-label">بريد الالكتروني</label>
+            <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">كلمة السر</label>
+            <input type="password" name="password" class="form-control" id="password">
+          </div>
+      <div class="modal-footer">
+        <input class="btn btn-primary btn-block" type="submit" value="تسجيل" />
+        <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">خروج</button>
+      </div>
+    </form>
+  </div>
+    </div>
+  </div>
+</div>
+<script>
+  
+// Start Validator
+
+var validator = $("#login-form").validate({
+    // ignore: "",
+  rules: {
+    //   ignore: [],
+      email: {
+        required: true,
+        minlength: 3,
+        maxlength:60,
+    },
+    password:{
+        required: true,
+        minlength: 5,
+        maxlength:60,
+    },
+
+  },
+});
+
+
+$('#login-form').on('submit',function(event){
+  event.preventDefault();
+  console.log(validator.invalid);
+  console.log(validator.numberOfInvalids());
+  if(validator.numberOfInvalids() !=0) return;
+
+  var data ={
+    email      :$("#email").val(),
+    password   :$("#password").val(),
+}
+console.log(data)
+
+
+// Send a POST request
+axios({
+  method: 'post',
+  url: '/login/',
+  data: data
+}).then(
+    res =>{
+      console.log(res.data)
+        if  (res.data.auth == 'scceeded'){
+          var redirect ;
+           if(res.data.role =='accounter'){
+            redirect = "/accounting";
+            }else if(res.data.role =='user'){
+              redirect = "/report";
+            }else{
+              redirect = "/admin";
+            }
+          window.location = redirect;
+
+        }else{
+            $('#err_msg').append(` <div  class='alert alert-danger' role="alert">البريد الالكتروني او كلمة السر خطأ !</div>`);
+        }
+    }
+);
+
+
+
+
+})
+</script>

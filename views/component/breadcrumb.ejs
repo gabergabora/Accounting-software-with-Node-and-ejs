@@ -1,0 +1,47 @@
+
+<%if(user.role =='accounter'){%>
+<div class="container">
+<nav aria-label="breadcrumb" class="breadcrumbs">
+    <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+
+    <%if(breadcrumb=='accounting'){%>
+    <li class="breadcrumb-item active" aria-current="page">الحسابات</li>
+    <%}else if(breadcrumb=='accounting_guide'){%>
+    <li class="breadcrumb-item "><a href="/accounting">الحسابات</a></li>
+    <li class="breadcrumb-item active" aria-current="page">الدليل المحاسبة</li>
+    <%}%>
+
+    <%if(breadcrumb=='dailyAgenda'){%>
+    <li class="breadcrumb-item "><a href="/accounting">الحسابات</a></li>
+    <li class="breadcrumb-item active" aria-current="page">دفتر اليومية</li>
+    <%}%>
+    </ol>
+</nav>
+</div>
+<%}%>
+
+<%if(user.role =='admin'){%>
+<div class="container">
+    <nav aria-label="breadcrumb" class="breadcrumbs">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="/accounting">الحسابات</a></li>
+        <li class="breadcrumb-item active" aria-current="page">الدليل المحاسبة</li>
+        </ol>
+    </nav>
+</div>
+<%}%>
+
+
+<%if(user.role =='user'){%>
+<div class="container">
+    <nav aria-label="breadcrumb" class="breadcrumbs">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+        <li class="breadcrumb-item"><a href="/accounting">الحسابات</a></li>
+        <li class="breadcrumb-item active" aria-current="page">الدليل المحاسبة</li>
+        </ol>
+    </nav>
+</div>
+<%}%>

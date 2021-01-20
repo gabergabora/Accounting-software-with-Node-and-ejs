@@ -1,0 +1,669 @@
+<%- include('./component/header.ejs') %>
+</head>
+<body>
+
+<%- include('./component/nav_bar') %>
+
+
+<%- include('./component/breadcrumb') %>
+
+
+ <div class="container Model-btn">
+  <div class="me-2 ">
+    <a class="btn btn-primary mb-3 guideModal" href="#" data-bs-toggle="modal" data-bs-target="#guideModal">انشاء دليل محاسبي جديد</a>
+  </div>
+  <div class="me-2 ">
+    <a class="btn btn-primary mb-3 itemModal" href="#" data-bs-toggle="modal" data-bs-target="#itemModal">انشاء صنف جديد</a>
+  </div>
+  <div class="me-2 ">
+    <a class="btn btn-primary mb-3 costModal" href="#" data-bs-toggle="modal" data-bs-target="#costModal">انشاء مركز تكلفة جديد</a>
+  </div>
+  <div class="me-2 ">
+    <a class="btn btn-primary mb-3 employeeModal" href="#" data-bs-toggle="modal" data-bs-target="#employeeModal">انشاء موظف جديد</a>
+  </div>
+  <div class="me-2 ">
+    <a class="btn btn-primary mb-3 supplierModal" href="#" data-bs-toggle="modal" data-bs-target="#supplierModal">انشاء مورد جديد</a>
+  </div>
+  <div class="me-2 ">
+    <a class="btn btn-primary mb-3 clientModal" href="#" data-bs-toggle="modal" data-bs-target="#clientModal">انشاء عميل جديد</a>
+  </div>
+</div>
+ 
+
+<!-- Tables -->
+<div class="container tablesAll" >
+    <!--onetable  -->
+  
+<div class=" onetable" >
+  
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">دليل محاسبي</th>
+        <th scope="col">تعديل او حذف</th>
+      </tr>
+    </thead>
+    <tbody id="onetable">
+      <%for(var i = 0; i < guides.length; i++ ){%>
+        <tr id="<%=guides[i]._id%>">
+          <th scope="row"><%=i+1%></th>
+          <td id="value_row_<%=guides[i]._id%>"><%=guides[i].name%> </td>
+          <td>
+              <span  class="font-edit"   data-bs-toggle="modal" data-bs-target="#exampleModaledite_<%=guides[i]._id%>"><i class="far fa-edit"></i></span>
+              <span  class="font-delete" data-bs-toggle="modal" data-bs-target="#exampleModaldelete_<%=guides[i]._id%>"><i class="far fa-trash-alt"></i></span>
+     
+              <!-- Edite Guied -->
+              <div class="modal fade" id="exampleModaledite_<%=guides[i]._id%>" tabindex="-1" aria-labelledby="<%=guides[i]._id%>" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">تعديل الدليل المحاسبي </h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="mb-3">
+                          <label for="<%=guides[i]._id%>" class="col-form-label">اسم الدليل المحاسبي</label>
+                          <input type="text" id="value_<%=guides[i]._id%>" value="<%=guides[i].name%>" class="form-control" name="guide_edited">
+                        <!--  -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-primary btn-block" type="button" onclick='saveChangesGuide("<%=guides[i]._id%>")' >حفظ التعديلات</button>
+                      
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">اغلاق</button>
+                    </div>
+                
+                    
+                  </div>
+                </div>
+              </div>
+        
+
+              <!-- Delte Guied -->
+              <div class="modal fade" id="exampleModaldelete_<%=guides[i]._id%>" tabindex="-1" aria-labelledby="<%=guides[i]._id%>" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" > حذف الدليل المحاسبي </h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                          <label for="delete_<%=guides[i]._id%>" class="col-form-label">اسم الدليل المحاسبي</label>
+                          <input type="text" id="value_dele_<%=guides[i]._id%>" readonly value="<%=guides[i].name%>" class="form-control" name="guide_delete">
+                          <label for="" style="color: red;"> لن يمكنك استرجاع هذا الدليل بعد ذلك !!</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <input class="btn btn-danger btn-block" type="button" onclick='deleteGuide("<%=guides[i]._id%>")' value="حذف !" />
+                      <button type="button" class="btn btn-dark" data-bs-dismiss="modal">اغلاق</button>
+                    </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+
+              
+            
+              
+          </td>
+        </tr>
+        <%}%>
+    </tbody>
+  </table>
+</div>
+
+<!-- twotable -->
+
+<div class="twotable" >
+  
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">الصنف</th>
+          <th scope="col">تعديل او حذف</th>
+        </tr>
+      </thead>
+      <tbody id="twotable">
+
+        <%for(var i = 0; i < items.length; i++ ){%>
+          <tr id="<%=items[i]._id%>">
+            <th scope="row"><%=i+1%></th>
+            <td id="value_row_<%=items[i]._id%>"><%=items[i].name%> </td>
+            <td>
+                <span class="font-edit"    data-bs-toggle="modal" data-bs-target="#exampleModaledite_<%=items[i]._id%>"><i class="far fa-edit"></i></span>
+                <span class="font-delete"  data-bs-toggle="modal" data-bs-target="#exampleModaldelete_<%=items[i]._id%>"><i class="far fa-trash-alt"></i></span> 
+
+
+                <!-- Edite Item -->
+                <div class="modal fade" id="exampleModaledite_<%=items[i]._id%>" tabindex="-1" aria-labelledby="<%=items[i]._id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" >تعديل اسم الصنف </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="mb-3">
+                            <label for="<%=items[i]._id%>" class="col-form-label">اسم الصنف</label>
+                            <input type="text" id="value_<%=items[i]._id%>"  value="<%=items[i].name%>" class="form-control" name="item_edited">
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                        <input class="btn btn-primary btn-block" type="button" onclick='saveChangesItem("<%=items[i]._id%>")' value="حفظ التعديلات" />
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">اغلاق</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          
+
+                <!-- Delte Item -->
+                <div class="modal fade" id="exampleModaldelete_<%=items[i]._id%>" tabindex="-1" aria-labelledby="<%=items[i]._id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" > حذف الصنف </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <form>
+                      <div class="modal-body">
+                          <div class="mb-3">
+                            <label for="delete_<%=items[i]._id%>" class="col-form-label">اسم الصنف</label>
+                            <input type="text" readonly id="value_dele_<%=items[i]._id%>" value="<%=items[i].name%>" class="form-control" name="item_delete">
+                            <label for="" style="color: red;"> لن يمكنك استرجاع هذا الصنف بعد ذلك !!</label>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                        <input class="btn btn-danger btn-block" type="button" onclick='deleteItem("<%=items[i]._id%>")' value="حذف !" />
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">اغلاق</button>
+                      </div>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+
+
+
+            </td>
+          </tr>
+          <%}%>
+
+        </tbody>
+    </table>
+  </div>
+
+
+  <!-- thiredtable -->
+
+<div class="thiredtable" >
+    <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">مركز التكلفه</th>
+        <th scope="col">تعديل او حذف</th>
+      </tr>
+    </thead>
+    <tbody id="thiredtable">
+      <%for(var i = 0; i < costs.length; i++ ){%>
+        <tr id="<%=costs[i]._id%>">
+          <th scope="row"><%=i+1%></th>
+          <td id="value_row_<%=costs[i]._id%>"> <%=costs[i].name%> </td>
+          <td>
+              <span class="font-edit"  data-bs-toggle="modal" data-bs-target="#exampleModaledite_<%=costs[i]._id%>"><i class="far fa-edit"></i></span>
+              <span class="font-delete"data-bs-toggle="modal" data-bs-target="#exampleModaldelete_<%=costs[i]._id%>" ><i class="far fa-trash-alt"></i></span> 
+
+              <!-- Edite Cost -->
+              <div class="modal fade" id="exampleModaledite_<%=costs[i]._id%>" tabindex="-1" aria-labelledby="<%=items[i]._id%>" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">تعديل مركز التكلفة </h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                          <label for="<%=costs[i]._id%>" class="col-form-label">اسم التكلفة</label>
+                          <input type="text"  id="value_<%=costs[i]._id%>" value="<%=costs[i].name%>" class="form-control" name="cost_edited">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <input class="btn btn-primary btn-block" type="button" onclick='saveChangesCost("<%=costs[i]._id%>")' value="حفظ التعديلات" />
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">اغلاق</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+
+              <!-- Delte Cost -->
+              <div class="modal fade" id="exampleModaldelete_<%=costs[i]._id%>" tabindex="-1" aria-labelledby="<%=costs[i]._id%>" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" > حذف التكلفة </h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                          <label for="delete_<%=costs[i]._id%>" class="col-form-label">اسم التكلفة</label>
+                          <input type="text"id="value_dele_<%=costs[i]._id%>"  readonly value="<%=costs[i].name%>" class="form-control" name="cost_delete">
+                          <label for="" style="color: red;"> لن يمكنك استرجاع هذة التكلفة بعد ذلك !!</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <input class="btn btn-danger btn-block" type="button" onclick='deleteCost("<%=costs[i]._id%>")' value="حذف !" />
+                      <button type="button" class="btn btn-dark" data-bs-dismiss="modal">اغلاق</button>
+                    </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+
+
+          </td>
+        </tr>
+        <%}%>
+
+    </tbody>
+  </table>
+</div>
+
+
+  <!-- fourthtable -->
+  <div class=" fourthtable" >
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">موضفين</th>
+          <th scope="col">تعديل او حذف</th>
+        </tr>
+      </thead>
+      <tbody id="fourthtable">
+        <%for(var i = 0; i < employees.length; i++ ){%>
+          <tr id="<%=employees[i]._id%>">
+            <th scope="row"><%=i+1%></th>
+            <td id="value_row_<%=employees[i]._id%>"><%=employees[i].name%> </td>
+            <td>
+                <span class="font-edit"  data-bs-toggle="modal" data-bs-target="#exampleModaledite_<%=employees[i]._id%>"><i class="far fa-edit"></i></span>
+                <span class="font-delete"data-bs-toggle="modal" data-bs-target="#exampleModaldelete_<%=employees[i]._id%>"><i class="far fa-trash-alt"></i></span> 
+
+
+                <!-- Edite Employee -->
+                <div class="modal fade" id="exampleModaledite_<%=employees[i]._id%>" tabindex="-1" aria-labelledby="<%=employees[i]._id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">تعديل اسم الموظف</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="mb-3">
+                            <label for="<%=employees[i]._id%>" class="col-form-label">اسم الموظف</label>
+                            <input type="text" id="value_<%=employees[i]._id%>"  value="<%=employees[i].name%>" class="form-control" name="employee_edited">
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                        <input class="btn btn-primary btn-block" type="button" onclick='saveChangesEmployee("<%=employees[i]._id%>")' value="حفظ التعديلات" />
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">اغلاق</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          
+  
+                <!-- Delte Employee -->
+                <div class="modal fade" id="exampleModaldelete_<%=employees[i]._id%>" tabindex="-1" aria-labelledby="<%=employees[i]._id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" > حذف موظف </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <form>
+                      <div class="modal-body">
+                          <div class="mb-3">
+                            <label for="delete_<%=employees[i]._id%>" class="col-form-label">اسم الموظف</label>
+                            <input type="text" readonly id="value_dele_<%=employees[i]._id%>" value="<%=employees[i].name%>" class="form-control" name="employee_delete">
+                            <input type="text" readonly hidden value="delete_<%=employees[i]._id%>" class="form-control" id="delete_<%=employees[i]._id%>">
+                            <label for="" style="color: red;"> لن يمكنك استرجاع هذا الموظف بعد ذلك !!</label>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                        <input class="btn btn-danger btn-block" type="button" onclick='deleteEmployee("<%=employees[i]._id%>",employee_delete.value)' value="حذف !" />
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">اغلاق</button>
+                      </div>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+  
+
+            </td>
+          </tr>
+          <%}%>
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <!-- supplier table -->
+  <div class="suppliertable" >
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">الموردين</th>
+          <th scope="col">تعديل او حذف</th>
+        </tr>
+      </thead>
+      <tbody id="suppliertable">
+        <%for(var i = 0; i < suppliers.length; i++ ){%>
+          <tr  id="<%=suppliers[i]._id%>">
+            <th scope="row"><%=i+1%></th>
+            <td id="value_row_<%=suppliers[i]._id%>"><%=suppliers[i].name%> </td>
+            <td>
+                <span class="font-edit"  data-bs-toggle="modal" data-bs-target="#exampleModaledite_<%=suppliers[i]._id%>" ><i class="far fa-edit"></i></span>
+                <span class="font-delete"data-bs-toggle="modal" data-bs-target="#exampleModaldelete_<%=suppliers[i]._id%>"><i class="far fa-trash-alt"></i></span> 
+
+
+                <!-- Edite Supplier -->
+                <div class="modal fade" id="exampleModaledite_<%=suppliers[i]._id%>" tabindex="-1" aria-labelledby="<%=suppliers[i]._id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">تعديل اسم المورد</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="mb-3">
+                            <label for="<%=suppliers[i]._id%>" class="col-form-label">اسم المورد</label>
+                            <input type="text" id="value_<%=suppliers[i]._id%>"  value="<%=suppliers[i].name%>" class="form-control" name="supplier_edited">
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                        <input class="btn btn-primary btn-block" type="button" onclick='saveChangesSupplier("<%=suppliers[i]._id%>")' value="حفظ التعديلات" />
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">اغلاق</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          
+  
+                <!-- Delte Supplier -->
+                <div class="modal fade" id="exampleModaldelete_<%=suppliers[i]._id%>" tabindex="-1" aria-labelledby="<%=suppliers[i]._id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" > حذف المورد </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <form>
+                      <div class="modal-body">
+                          <div class="mb-3">
+                            <label for="delete_<%=suppliers[i]._id%>" class="col-form-label">اسم المورد</label>
+                            <input type="text" readonly id="value_dele_<%=suppliers[i]._id%>" value="<%=suppliers[i].name%>" class="form-control" name="supplier_delete">
+                            <label for="" style="color: red;"> لن يمكنك استرجاع هذا المورد بعد ذلك !!</label>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                        <input class="btn btn-danger btn-block" type="button" onclick='deleteSupplier("<%=suppliers[i]._id%>")' value="حذف !" />
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">اغلاق</button>
+                      </div>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+
+
+            </td>
+          </tr>
+          <%}%>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- client table -->
+  <div class="clienttable" >
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">العملاء</th>
+        <th scope="col">تعديل او حذف</th>
+      </tr>
+    </thead>
+    <tbody id="clienttable">
+      <%for(var i = 0; i < clients.length; i++ ){%>
+        <tr  id="<%=clients[i]._id%>">
+          <th scope="row"><%=i+1%></th>
+          <td id="value_row_<%=clients[i]._id%>"><%=clients[i].name%> </td>
+          <td>
+              <span class="font-edit" data-bs-toggle="modal" data-bs-target="#exampleModaledite_<%=clients[i]._id%>" ><i class="far fa-edit"></i></span>
+              <span class="font-delete"data-bs-toggle="modal" data-bs-target="#exampleModaldelete_<%=clients[i]._id%>"><i class="far fa-trash-alt"></i></span> 
+
+              
+              <!-- Edite Supplier -->
+              <div class="modal fade" id="exampleModaledite_<%=clients[i]._id%>" tabindex="-1" aria-labelledby="<%=clients[i]._id%>" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">تعديل اسم العميل</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                          <label for="<%=clients[i]._id%>" class="col-form-label">اسم العميل</label>
+                          <input type="text" id="value_<%=clients[i]._id%>" value="<%=clients[i].name%>" class="form-control" name="client_edited">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <input class="btn btn-primary btn-block" type="button" onclick='saveChangesClient("<%=clients[i]._id%>")' value="حفظ التعديلات" />
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">اغلاق</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+
+              <!-- Delte Supplier -->
+              <div class="modal fade" id="exampleModaldelete_<%=clients[i]._id%>" tabindex="-1" aria-labelledby="<%=clients[i]._id%>" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" > حذف العميل </h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                          <label for="<%=clients[i]._id%>" class="col-form-label">اسم العميل</label>
+                          <input type="text" readonly id="value_dele_<%=clients[i]._id%>" value="<%=clients[i].name%>" class="form-control" name="client_delete">
+                          <label for="" style="color: red;"> لن يمكنك استرجاع هذا العميل بعد ذلك !!</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <input class="btn btn-danger btn-block" type="button" onclick='deleteClient("<%=clients[i]._id%>")' value="حذف !" />
+                      <button type="button" class="btn btn-dark" data-bs-dismiss="modal">اغلاق</button>
+                    </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+
+
+          </td>
+        </tr>
+        <%}%>
+    </tbody>
+  </table>
+</div>
+  
+
+</div>
+
+<!-- GiudeModal -->
+<div class="modal fade" id="guideModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">انشاء دليل محاسبي جديد</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="guide_form">
+          <div class="mb-3">
+            <label for="guide" class="form-label">اسم الدليل</label>
+            <input type="text" name="guide" class="form-control" id="guide" aria-describedby="guideHelp">
+            <div id="err_msg" ></div>
+          </div>
+      <div class="modal-footer">
+        <input class="btn btn-primary btn-block" type="submit" value="انشاء" />
+        <button type="submit" id="closeGuideModel" class="btn btn-danger" data-bs-dismiss="modal">الغاء</button>
+      </div>
+    </form>
+  </div>
+    </div>
+  </div>
+</div>
+
+<!-- Item Modal -->
+<div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">انشاء صنف جديد</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="item_form">
+          <div class="mb-3">
+            <label for="item" class="form-label">اسم الصنف</label>
+            <input type="text" name="item" class="form-control" id="item" aria-describedby="item">
+            <div id="err_msg" ></div>
+          </div>
+      <div class="modal-footer">
+        <input class="btn btn-primary btn-block" type="submit" value="انشاء" />
+        <button type="submit" id="closeItemModel" class="btn btn-danger" data-bs-dismiss="modal">الغاء</button>
+      </div>
+    </form>
+  </div>
+    </div>
+  </div>
+</div>
+
+<!--Cost Modal -->
+<div class="modal fade" id="costModal" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel3">انشاء مركز تكلفة</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="cost_form">
+          <div class="mb-3">
+            <label for="cost" class="form-label">اسم التكلفة</label>
+            <input type="text" name="cost" class="form-control" id="cost" aria-describedby="costHelp">
+            <div id="err_msg" ></div>
+          </div>
+      <div class="modal-footer">
+        <input class="btn btn-primary btn-block" type="submit" value="انشاء" />
+        <button type="submit" id="closeCostModel" class="btn btn-danger" data-bs-dismiss="modal">الغاء</button>
+      </div>
+    </form>
+  </div>
+    </div>
+  </div>
+</div>
+
+<!-- Employee Modal -->
+<div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel4">انشاء موظف</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="employee_form">
+          <div class="mb-3">
+            <label for="employee" class="form-label">اسم الموظف</label>
+            <input type="text" name="employee" class="form-control" id="employee" aria-describedby="employeeHelp">
+            <div id="err_msg" ></div>
+          </div>
+      <div class="modal-footer">
+        <input class="btn btn-primary btn-block" type="submit" value="انشاء" />
+        <button type="submit" id="closeEmployeeModel" class="btn btn-danger" data-bs-dismiss="modal">الغاء</button>
+      </div>
+    </form>
+  </div>
+    </div>
+  </div>
+</div>
+
+<!-- Supplier Modal -->
+<div class="modal fade" id="supplierModal" tabindex="-1" aria-labelledby="exampleModalLabel5" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel5">انشاء مورد جديد</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="supplier_form">
+          <div class="mb-3"> 
+            </div>
+            <label for="supplier" class="form-label">اسم المورد</label>
+            <input type="text" name="supplier" class="form-control" id="supplier" aria-describedby="supplierHelp">
+            <div id="err_msg" >  
+          </div>
+      <div class="modal-footer">
+        <input class="btn btn-primary btn-block" type="submit" value="انشاء" />
+        <button type="submit" id="closeSupplierModel" class="btn btn-danger" data-bs-dismiss="modal">الغاء</button>
+      </div>
+    </form>
+  </div>
+    </div>
+  </div>
+</div>
+
+<!-- Client Modal -->
+<div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="exampleModalLabel6" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel6">انشاء عميل جديد</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="client_form">
+          <div class="mb-3"> 
+            </div>
+            <label for="client" class="form-label">اسم العميل</label>
+            <input type="text" name="client" class="form-control" id="client" aria-describedby="clientHelp">
+            <div id="err_msg" >  
+          </div>
+      <div class="modal-footer">
+        <input class="btn btn-primary btn-block" type="submit" value="انشاء" />
+        <button type="submit" id="closeClientModel" class="btn btn-danger" data-bs-dismiss="modal">الغاء</button>
+      </div>
+    </form>
+  </div>
+    </div>
+  </div>
+</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="../assets/js/accounting_guide.js"></script>
+
+<%- include('./component/footer.ejs') %>

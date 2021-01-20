@@ -1,0 +1,98 @@
+.FormTable{
+    border :1px solid #ddd;
+    padding : 20px;
+    width: 70%;
+    margin: auto;
+    margin-top: 30px;
+}
+.bor{
+    border:1px solid blue;
+    width:100%;
+}
+#price-error{
+    margin-right: 25%;
+}
+#date-error{
+    margin-right: 53%;
+}
+
+
+
+@media (max-width: 1200px) {
+.container{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.FormTable{
+width: 84%;
+}
+}
+
+
+
+@media (max-width: 998px) {
+.container{
+margin-right: 10px;
+margin-left: 10px;
+}
+.FormTable{
+width: 100%;
+}
+}
+
+@media (max-width: 766px) {
+.container{
+margin-right:  0px;
+margin-left:  0px;
+}
+.FormTable{
+width: 100%;
+}
+.form-input{
+margin-bottom: 30px !important;
+/* display: inline-block; */
+}
+.date{
+display:table
+}
+.error{
+display: block;
+}
+}
+
+@media (max-width: 512px) {
+.col-md-4{
+margin-bottom: 35px;
+}
+#inputItem{
+margin-top: -17px
+}
+.form-input{
+width: 100%;
+}
+.date{
+    margin-top: -18px
+}
+}
+
+
+@media(max-width:406px){
+#price-error{
+    margin-right: 10%;
+}
+}
+
+
+
+
+
+.alert-notInvoices{
+margin-top: 50px !important
+}
+
+.page-navigation{
+margin-top: 70px;
+margin: auto;
+width: 50%;
+padding: 10px;
+}

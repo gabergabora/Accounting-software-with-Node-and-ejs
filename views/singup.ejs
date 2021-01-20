@@ -1,0 +1,278 @@
+<%- include('./component/header.ejs') %>
+</head>
+<body>
+
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div id="err_msg1" >
+                                
+                            </div>
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">أنشاء حساب جديد</h3></div>
+                            <div class="card-body">
+                                <form id="singupform">
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="inputFirstName">الاسم الاول</label>
+                                                <input class="form-control" name="inputFirstName"  id="inputFirstName" type="text" placeholder="قم بأدخال الاسم الاول" />
+                                                <label class="error" for="inputFirstName"></label>
+                                               <br>
+                                              
+                                               <label class="small mb-1" for="inputLastName">الاسم الثاني</label>
+                                                <input class="form-control" name="inputLastName"  id="inputLastName" type="text" placeholder="قم بأدخال الاسم الثاني" />
+                                                <label class="error" for="inputLastName"></label>
+                                                <br>
+
+                                                <label class="small mb-1" for="inputEmailAddress">قم بأدخال بريدك الالكتروني</label>
+                                                <input class="form-control" name="inputEmailAddress" id="inputEmailAddress" type="email" placeholder="قم بأدخال بريدك الالكتروني" />
+                                                <label class="error" for="inputEmailAddress"></label>
+                                                 <br>
+                                                 
+                                                <label class="small mb-1" for="inputphonenumber">قم بأدخال هاتفك المحمول</label>
+                                                <input class="form-control" name="inputphonenumber" id="inputphonenumber" type="text" placeholder="قم بأدخال هاتفك المحمول" />
+                                                <label class="error" for="inputphonenumber"></label>
+                                                <br>
+                                                
+                                                <label class="small mb-1" for="inputAddress">قم بأدخال عنوانك</label>
+                                                <input class="form-control" name="inputAddress" id="inputAddress" type="text" placeholder="قم بأدخال عنوانك" />
+                                                <label class="error" for="inputAddress"></label>
+                                                <br>
+                                                
+                                                <label class="small mb-1" for="inputPassword">كلمة السر</label>
+                                                <input class="form-control" name="inputPassword"  id="inputPassword" type="password" placeholder="قم بأدخال كلمة السر" />
+                                                <label class="error" for="inputPassword"></label>
+                                                <br>
+                                                
+                                                <label class="small mb-1" for="inputConfirmPassword">تأكيد كلمة السر</label>
+                                                <input class="form-control" name="inputConfirmPassword" id="inputConfirmPassword" type="password" placeholder="تأكيد كلمة السر" />
+                                                <label class="error" for="inputConfirmPassword"></label>
+                                                <br>
+                                                
+                                            </div>
+                                        </div>
+                                       </div>
+                                    <div class="form-group mt-4 mb-0"><input class="btn btn-primary btn-block" type="submit" id="submit_form" value="تسجيل الدخول"/> </div>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="small"><a  href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">هل لديك حساب بالفعل ؟ قم بتسجيل الدخول</a></div>
+
+                            </div>
+                            <a id="redirect" href="/"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">تسجيل دخول</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="login-form">
+            <div class="mb-3">
+              <div id="err_msg" >
+              </div>
+              <label for="email" class="form-label">بريد الالكتروني</label>
+              <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">كلمة السر</label>
+              <input type="password" name="password" class="form-control" id="password">
+            </div>
+        
+        <div class="modal-footer">
+          <input class="btn btn-primary btn-block" type="submit" value="تسجيل" />
+          <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">خروج</button>
+        </div>
+      </form>
+</div>
+</div>
+</div>
+</div>
+<!-- End Model -->
+
+
+<script>
+ 
+//  Start Login
+ // Start Validator
+ var validator = $("#login-form").validate({
+      // ignore: "",
+    rules: {
+      //   ignore: [],
+        email: {
+          required: true,
+          minlength: 3,
+          maxlength:60,
+      },
+      password:{
+          required: true,
+          minlength: 5,
+          maxlength:60,
+      },
+  
+    },
+  });
+  
+  $('#login-form').on('submit',function(event){
+    event.preventDefault();
+    console.log(validator.invalid);
+    console.log(validator.numberOfInvalids());
+    if(validator.numberOfInvalids() !=0) return;
+  
+    var data ={
+      email      :$("#email").val(),
+      password   :$("#password").val(),
+  }
+  console.log(data)
+  
+  
+  // Send a POST request
+  axios({
+    method: 'post',
+    url: '/login/',
+    data: data
+  }).then(
+      res =>{
+        console.log(res.data)
+          if  (res.data.auth == 'scceeded'){
+                  window.location = "/";
+          }else{
+              $('#err_msg').append(` <div  class='alert alert-danger' role="alert">البريد الالكتروني او كلمة السر خطأ !</div>`);
+          }
+      }
+  );
+  })
+//   End Login
+
+
+
+
+
+// Start Singup
+// creat custom validation
+$.validator.addMethod('equal',(v , e) =>{
+    if(v == $("#inputPassword").val() ){
+        return true ; 
+    }
+});
+$.validator.addMethod('phone_number',(v,e)=>{
+     var numbers = /^[0-9]+$/;
+    if(v.match(numbers) ){
+        return true;
+    }
+});
+// end custom validation
+
+// Start Validator
+
+var validator = $("#singupform").validate({
+    // ignore: "",
+  rules: {
+    //   ignore: [],
+      inputFirstName: {
+        required: true,
+        minlength: 3,
+        maxlength:35,
+    },
+    inputLastName:{
+        required: true,
+        minlength: 3,
+        maxlength:35,
+    },
+    inputEmailAddress:{
+        required: true,
+        minlength: 6,
+        maxlength:50,
+        email:true,
+    },
+    inputphonenumber:{
+        required: true,
+        minlength: 11,
+        maxlength:11,
+        phone_number:true
+    },
+    inputAddress:{
+        required: true,
+        minlength: 8,
+        maxlength:200,
+    },
+    inputPassword:{
+        required: true,
+        minlength: 5,
+        maxlength:40,
+    },
+    inputConfirmPassword:{
+        required: true,
+        equal:true,
+        
+    },
+  },
+  messages: {
+      inputConfirmPassword: {
+       equal : "رجاء ادخال كلمةالسر مرة أخري"
+      },
+      inputphonenumber:{
+        phone_number:'رجاء ادخال رقم هاتف صحيح'
+      }
+
+    },
+});
+// End Validator
+
+$("#singupform" ).on( "submit", function( event ) {
+  event.preventDefault();
+  console.log(validator.invalid);
+    console.log(validator.numberOfInvalids())
+  if(validator.numberOfInvalids() !== 0) return;
+
+var data ={
+    firstName           :$("#inputFirstName").val(),
+    LastName            :$("#inputLastName").val(),
+    EmailAddress        :$("#inputEmailAddress").val(),
+    inputphonenumber    :$("#inputphonenumber").val(),
+    inputAddress        :$("#inputAddress").val(),
+    Password            :$("#inputPassword").val(),
+    ConfirmPassword     :$("#inputConfirmPassword").val(),
+}
+console.log(data)
+
+
+// Send a POST request
+axios({
+  method: 'post',
+  url: '/singup/',
+  data: data
+}).then(
+    res =>{
+        console.log(res.data.status)
+        if  (res.data.status == 'user created succusfully'){
+                window.location = "/";
+        }else{
+            $('#err_msg1').append(` <div  class='alert alert-danger' role="alert">  عذرا هذا الحساب بالفعل موجود ! يمكنك تسجيل الدخول الان</div>`);
+        }
+    }
+);
+
+
+});
+
+</script>
+
+
+<%- include('./component/footer.ejs') %>

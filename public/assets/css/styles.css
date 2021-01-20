@@ -561,6 +561,7 @@ pre code {
 @media (min-width: 768px) {
   .container-md, .container-sm, .container {
     max-width: 720px;
+    max-width: 900px;
   }
 }
 @media (min-width: 992px) {
@@ -10077,10 +10078,10 @@ body {
   }
 
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
-    transform: translateX(-225px);
+    transform: translateX(225px);
   }
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content {
-    margin-left: -225px;
+    margin-left: 225px;
   }
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content:before {
     display: none;
