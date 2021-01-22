@@ -15,6 +15,51 @@
 #date-error{
     margin-right: 53%;
 }
+.container{
+    margin:auto;
+    width:100%
+}
+.table {
+/* width: max-content; */
+width: 100%;
+}
+td{
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.container-search{
+padding-right: 12px;
+overflow: auto;
+width: 100%;
+float: right;
+border: 2px solid #65625e;
+margin-right: 8px;
+margin-bottom: 20px;
+background: #2e3e4c;
+}
+.FormSearch{
+margin: auto;
+margin-bottom: -12px;
+margin-top: 19px;
+margin-right: 0px;
+}
+.navbarSearch{
+color: antiquewhite;
+}
+.row{
+    width: 100%;
+}
+
+.rowTwo{
+margin-right: 192px;
+}
+
+
+
+.alert-notInvoices{
+margin-top: 50px !important
+}
 
 
 
@@ -26,6 +71,23 @@
 .FormTable{
 width: 84%;
 }
+.col-3{
+width: 40%;
+}
+.rowTwo{
+margin-right: 0px;
+}
+.item , .dateTo , .DebtorAccount , .CreditorAccount{
+margin: auto;
+margin-right: 44%;
+}
+.submit{
+margin-right: 50%;
+}
+/* {
+margin: auto;
+margin-right: 44%; */
+/* } */
 }
 
 
@@ -58,6 +120,15 @@ display:table
 .error{
 display: block;
 }
+.col-3 {
+display: contents;
+}
+
+
+
+
+
+
 }
 
 @media (max-width: 512px) {
@@ -73,6 +144,9 @@ width: 100%;
 .date{
     margin-top: -18px
 }
+.col-3 {
+display: contents;
+}
 }
 
 
@@ -80,19 +154,4 @@ width: 100%;
 #price-error{
     margin-right: 10%;
 }
-}
-
-
-
-
-
-.alert-notInvoices{
-margin-top: 50px !important
-}
-
-.page-navigation{
-margin-top: 70px;
-margin: auto;
-width: 50%;
-padding: 10px;
 }

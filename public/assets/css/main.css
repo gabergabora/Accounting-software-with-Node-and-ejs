@@ -38,11 +38,16 @@ border: 1px solid #0c5fda;
 }
 
 .container{
+margin:auto;
+width:100%;
 margin-top: 22px;
 }
 .breadcrumbs{
 background-color: #becde475;
 padding: 3px 2px 3px 0px;
+margin: auto;
+width: 100%;
+margin-top: 10px;
 }
 
 .breadcrumb{
@@ -195,7 +200,9 @@ float:right;
 margin-right: 40px;
 }
 .container{
-    margin-right: 10px;
+margin:auto;
+width:100%;
+margin-right: 0px;
 }
 .thiredtable{
     margin-left: 0px;
@@ -247,7 +254,7 @@ margin-right: 40px;
     margin-right: 0px;
     }
     .container{
-        margin-right: 10px;
+        margin-right: 0px;
     }
     .thiredtable{
         margin-left: 0px;
@@ -286,7 +293,9 @@ margin-right: 20px;
     /* width: 12%; */
     }
 .tablesAll{
-    margin-top: 200px;
+margin: auto;
+margin-top: 174px;
+width: 100%;
 }
 /* #a3abb1 -  rgb(158 86 86 / 60%) */
 /*  rgb(0 0 0 / 53%) - #75787b3b */

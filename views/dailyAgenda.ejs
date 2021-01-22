@@ -35,474 +35,76 @@
     لا يوجد فاتورة يومية حتي الان !
   </div>
   <%}else{%>
-    <p>اكتب اي شئ في شريط البحث لكي تجد ما تبحث عنة بسهولة:</p>  
-    <input class="form-control" id="myInput" type="text" placeholder="بحث...">
-    <br>
-        <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">رقم الفاتورة</th>
-                <th scope="col">التاريخ</th>
-                <th scope="col">الصنف</th>
-                <th scope="col">شرح القيد</th>
-                <th scope="col">العدد</th>
-                <th scope="col">السعر</th>
-                <th scope="col">الاجمالي</th>
-                <th scope="col">حساب المدين</th>
-                <th scope="col">حساب الدائن</th>
-                <th scope="col">تعديل او حذف</th>
-              </tr>
-            </thead>
-            <tbody id="myTable">
-              <!-- invoices -->
-           
-              <%for( i in invoices){%>
-              
-                <tr id="row_inovice_<%=invoices[i]._id%>">
-                  <th scope="row"> <%=(50 -i)%></th>
-                  <td class="invoiceNumber"><%=invoices[i].invoiceNumber%> </td>
-                  <% let invoiceDateE = new Date(invoices[i].date).toISOString().slice(0,10) %>
-                  <td id="invoiceDate_<%=invoices[i]._id%>"> <%= invoiceDateE%>  </td>
-                  <td id="invoiceItem_<%=invoices[i]._id%>"> <%=invoices[i].item.name%></td>
-                  <td id="invoiceExplainTheLimitation_<%=invoices[i]._id%>"> <%=invoices[i].ExplainTheLimitation%></td>
-                  <td id="invoiceCount_<%=invoices[i]._id%>"> <%=invoices[i].count%></td>
-                  <td id="invoicePrice_<%=invoices[i]._id%>"> <%=invoices[i].price%></td>
-                  <td id="invoiceTotal_<%=invoices[i]._id%>"> <%=invoices[i].Total%></td>
-                  <td id="invoiceDebtorAccount_<%=invoices[i]._id%>"> <%=invoices[i].DebtorAccount.name%></td>
-                  <td id="invoiceCreditorAccount_<%=invoices[i]._id%>"> <%=invoices[i].CreditorAccount.name%></td>
-                  <td>
-                    <span class="font-edit"  data-bs-toggle="modal" data-bs-target="#InvoiceModaledite_<%=invoices[i]._id%>"><i class="far fa-edit"></i></span>
-                    <span class="font-delete"data-bs-toggle="modal" data-bs-target="#InvoiceModaldelete_<%=invoices[i]._id%>"><i class="far fa-trash-alt"></i></span> 
-                    
-                  
-                <!-- Edite invoices -->
-                <div class="modal fade " id="InvoiceModaledite_<%=invoices[i]._id%>" tabindex="-1" aria-labelledby="<%=invoices[i]._id%>" aria-hidden="true">
-                  <div class="modal-dialog ">
-                    <div class="modal-content">
-                      <form  id="formEdite_<%=invoices[i]._id%>" name="formEditeName_<%=invoices[i]._id%>">
-                      <div class="modal-header">
-                        <h5 class="modal-title">تعديل فاتورة</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      
-                      <div class="modal-body">
-                          <div class="mb-3">
-                            <div class="">
-                              <div class="alert alert-dark" role="alert">
-                                رقم الفاتورة <span class="badge badge-dark text-dark"><%=invoices[i].invoiceNumber%></span>
-                                <input type="hidden" id="invoiceNumber_<%=invoices[i]._id%>"  value="<%=invoices[i].invoiceNumber%>">
-                                <span class="sr-only">unread messages</span>
-                              </div>
-                            </div>
+
+    <!-- Search -->
+    <%- include('./component/searchbar') %>
+    <!-- End Search -->
+   
+    <!-- Table -->
+    <%- include('./component/tableDailyAgenda') %>
+    <!-- End Table -->
 
 
-                            <div class="input-group mb-3 form-input">
-                                <label for="invoices_date" class="input-group-text ">التاريخ</label>
-                                <% let invoiceDate = new Date(invoices[i].date).toISOString().slice(0,10) %>
-                                <input type="date" value="<%=invoiceDate %>" id="date_<%=invoices[i]._id%>"  class="form-control" name="invoices_date">
-                            </div>
-                            
+    <%}%>
 
-                      <div class="input-group mb-3 form-input">
-                            <label for="invoices_item" class="input-group-text">الصنف</label>
-                              
-                            <select id="inputItem_<%=invoices[i]._id%>" class="form-select" name="selectItem">
-                              <option  selected value='<%=invoices[i].item._id%>' > <%=invoices[i].item.name%> </option>
-                              <%for(x of items){%>
-                                <option value="<%=x._id%>"><%=x.name%></option>
-                                <%}%>
-                            </select>
-                      </div>
-             
-
-                      <div class="input-group mb-3 form-input">
-                        <label for="invoices_ExplainTheLimitation" class="input-group-text">شرح القيد</label>
-                        <input type="text" id="ExplainTheLimitation_<%=invoices[i]._id%>" value="<%=invoices[i].ExplainTheLimitation%>"  class="form-control" name="invoices_ExplainTheLimitation">
-                      </div>
-                      <span class="ExplainTheLimitation_error_<%=invoices[i]._id%>"></span>
-
-
-                      
-                      <div class="input-group mb-3 form-input">             
-             
-                        <label for="oldDebtorAccount_<%=invoices[i]._id%>" class="input-group-text">حساب المدين</label>
-                          
-                        <select class="form-select" id="DebtorAccount_<%=invoices[i]._id%>" name="DebtorAccount_<%=invoices[i]._id%>">
-                          <option  selected value='<%=invoices[i].DebtorAccount._id%>' > <%=invoices[i].DebtorAccount.name%> </option>
-
-                          <optgroup label="الدليل المحاسبي" data-max-options="1">
-                            <%for(w of guides){%>
-                               <option value="<%=w._id%>"><%=w.name%></option>
-                            <%}%>
-                          </optgroup>
-        
-                          <optgroup label="الموردون" data-max-options="1">
-                            <%for(e of suppliers){%>
-                               <option value="<%=e._id%>"><%=e.name%></option>
-                            <%}%>
-                          </optgroup>
-        
-                            <optgroup label="العملاء" data-max-options="1">
-                            <%for(r of clients){%>
-                               <option value="<%=r._id%>"><%=r.name%></option>
-                            <%}%>
-                          </optgroup>
-                          
-                            <optgroup label="الموظفين" data-max-options="1">
-                            <%for(t of employees){%>
-                                <option value="<%=t._id%>"><%=t.name%></option>
-                            <%}%>
-                          </optgroup>
-        
-                            <optgroup label="التكلفة" data-max-options="1">
-                            <%for(y of costs){%>
-                                <option value="<%=y._id%>"><%=y.name%></option>
-                            <%}%>
-                          </optgroup>
-                        </select>
-                        <label  class="DebtorAccount_error_<%=invoices[i]._id%>" for="DebtorAccount"></label>
-                      </div>
-
-
-                      <div class="input-group mb-3 form-input">             
-             
-                        <label for="oldCreditorAccount_<%=invoices[i]._id%>" class="input-group-text">حساب دائن</label>
-                          
-                        <select class="form-select" id="CreditorAccount_<%=invoices[i]._id%>" name="CreditorAccount_<%=invoices[i]._id%>">
-                          <option  selected value='<%=invoices[i].CreditorAccount._id%>' > <%=invoices[i].CreditorAccount.name%> </option>
-                          <optgroup label="الدليل المحاسبي" data-max-options="1">
-                            <%for(w of guides){%>
-                               <option value="<%=w._id%>"><%=w.name%></option>
-                            <%}%>
-                          </optgroup>
-        
-                          <optgroup label="الموردون" data-max-options="1">
-                            <%for(e of suppliers){%>
-                               <option value="<%=e._id%>"><%=e.name%></option>
-                            <%}%>
-                          </optgroup>
-        
-                            <optgroup label="العملاء" data-max-options="1">
-                            <%for(r of clients){%>
-                               <option value="<%=r._id%>"><%=r.name%></option>
-                            <%}%>
-                          </optgroup>
-                          
-                            <optgroup label="الموظفين" data-max-options="1">
-                            <%for(t of employees){%>
-                                <option value="<%=t._id%>"><%=t.name%></option>
-                            <%}%>
-                          </optgroup>
-        
-                            <optgroup label="التكلفة" data-max-options="1">
-                            <%for(y of costs){%>
-                                <option value="<%=y._id%>"><%=y.name%></option>
-                            <%}%>
-                          </optgroup>
-                        </select>
-                      </div>
-                      <spam  class="CreditorAccount_error_<%=invoices[i]._id%>" ></spam>
-
-
-                      <div class="input-group mb-3 form-input">
-                              <label for="invoices_count" class="input-group-text">العدد</label>
-                              <input type="number" id="count_<%=invoices[i]._id%>" value="<%=invoices[i].count%>"  class="form-control" name="invoices_count">
-                      </div>
-
-
-                      <div class="input-group mb-3 form-input">
-                              <label for="invoices_price" class="input-group-text">السعر</label>
-                              <input type="number" id="price_<%=invoices[i]._id%>"  value="<%=invoices[i].price%>"  class="form-control" name="invoices_price">
-                      </div>
-
-                     
-
-                      <div class="input-group mb-3 form-input">
-                              <label for="invoices_total" class="input-group-text">الاجمالي</label>
-                              <input type="text" readonly  id="EditeTotal_<%=invoices[i]._id%>"  value="<%=invoices[i].Total%>" class="form-control" placeholder="" aria-label="">
-                      </div>
-                      <button  class="badge badge-dark text-dark" type="button"   onclick="calculateEditeTotal(invoices_count.value ,invoices_price.value ,'EditeTotal_<%=invoices[i]._id%>' )">احسب الاجمالي الجديد</button>
-
-                      <span class="Count_Price_error_<%=invoices[i]._id%>"></span>
-                        </div>
-                      </div>
-                    
-
-                      <div class="modal-footer">
-                        <input class="btn btn-primary btn-block" type="button" onclick="submitEditeInvoice('<%=invoices[i]._id%>')" value="حفظ التعديلات" />
-                        <button type="button" class="btn btn-danger" id="CloseEditeModal_<%=invoices[i]._id%>" data-bs-dismiss="modal">اغلاق</button>
-                      </div>
-                    </form>
-                    </div>
-                  </div>
-                </div>
-          
-                  
-                  
-                <!-- Delte Supplier -->
-                <div class="modal fade" id="InvoiceModaldelete_<%=invoices[i]._id%>" tabindex="-1" aria-labelledby="<%=invoices[i]._id%>" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">حذف فاتورة</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <form>
-                      <div class="modal-body">
-
-                        <div class="">
-                          <div class="alert alert-dark" role="alert">
-                            رقم الفاتورة <span class="badge badge-dark text-dark"><%=invoices[i].invoiceNumber%></span>
-                            <input type="hidden" id="delete_invoiceNumber_<%=invoices[i]._id%>"  value="<%=invoices[i].invoiceNumber%>">
-                            <span class="sr-only">unread messages</span>
-                          </div>
-                        </div>
-
-
-                      </div>
-                      <div class="modal-footer">
-                        <input class="btn btn-danger btn-block" type="button" onclick='submitDeleteInvoice("<%=invoices[i]._id%>")' value="حذف !" />
-                        <button type="button" class="btn btn-dark CloseModal_<%=invoices[i]._id%>" data-bs-dismiss="modal">اغلاق</button>
-                      </div>
-                    </form>
-                    </div>
-                  </div>
-                </div>
-                  
-                  </td>
-                </tr>
-                <%}%>
-  
-
-            </tbody>
-          </table>
-  <%}%>
-
-  <nav class="page-navigation" aria-label="Page navigation example">
-    <ul class="pagination">
-
-      <% if (Pages > 0) { %>
-
-        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
-        <% if (i !== 1) { %>
-          <li class="page-item disabled"><a class="page-link">السابق ...</a></li>
-        <% } %>
-
-          <% if(Number(current)>6){var start =  (Number(current) - 6)}else{start = 1}%>
-
-        <% for (i=start ; i <= (Number(current) + 6) && i <= Pages; i++) { %>
-        
-            <% if (i == current) { %>
-              <li class="page-item active"><a class="page-link" href="#"><%= i %></a></li>
-            <% } else { %>
-                <li class="page-item "><a class="page-link " href="/accounting/dailyAgenda/<%=i%>"><%=i%></a></li>
-             <% } %>
-        
-             <% if (i == Number(current) + 6 && i < Pages) { %>
-              <li class="page-item disabled" ><a class="page-link ">التالي...</a></li>
-             <% } %>
-
-
-        <% } %>
-    
-    <% } %>
-    </ul>
-  </nav>
+    <!-- Daily Agenda Pagination -->
+    <%- include('./component/dailyAgendaPagination') %>
+    <!-- End Daily Agenda Pagination -->
 
   </div>
 
-  
+
+<!-- Create a invoice -->
+    <%- include('./component/CreateAInvoice') %>
+<!-- End Create a invoice -->
 
 
+    
 
-<div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
-    <form id="invoice-form">
-      <div class="FormTable body">
 
-      <label for="basic-url" class="form-label">انشاء فاتورة جديدة </label>
+    
 
-      <div class="input-group mb-3">
-            <span class="input-group-text form-input" id="basic-addon3">الصنف</span>
-            <div class="col-md-4">
-              <select id="inputItem" class="form-select" name="selectItem">
-                <%for(i of items){%>
-                  <option value="<%=i._id%>"><%=i.name%></option>
-                  <%}%>
-              </select>
-            </div>
-            
-            <span class="input-group-text form-input">التاريخ</span>
-            <input class="form-control date" type="date" id="date" name="date">
-        </div>
-        <div class="input-group mb-3">
-              <label id="date-error" class="error" for="date"></label>
+      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+        <div>
+          <p>
+            Top 10 Best Programming Languages To Learn In 2021?
+
+              Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
+
+              Make sure to let me know in the comments other videos you want to see and I will ensure to give 
+              Top 10 Best Programming Languages To Learn In 2021?
+
+              Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
+
+              Make sure to let me know in the comments other videos you want to see and I will ensure to give 
+              Top 10 Best Programming Languages To Learn In 2021?
+
+              Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
+
+              Make sure to let me know in the comments other videos you want to see and I will ensure to give 
+              Top 10 Best Programming Languages To Learn In 2021?
+
+              Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
+
+              Make sure to let me know in the comments other videos you want to see and I will ensure to give 
+              Top 10 Best Programming Languages To Learn In 2021?
+
+              Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
+
+              Make sure to let me know in the comments other videos you want to see and I will ensure to give 
+              Top 10 Best Programming Languages To Learn In 2021?
+
+              Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
+
+              Make sure to let me know in the comments other videos you want to see and I will ensure to give 
+        </p>
         </div>
         
-        <div class="input-group mb-3 form-input">
-          
-            <span class="input-group-text">شرح القيد</span>
-        
-            <input type="text" class="form-control" placeholder="" id="ExplainTheLimitation" aria-label="" name="ExplainTheLimitation">
-          
-            
-        </div>
-        <div class="input-group mb-3">
-          <label id="ExplainTheLimitation-error" class="error" for="ExplainTheLimitation"></label>
-        </div>
-
-
-
-        <div class="input-group mb-3 form-input">
-
-              <span class="input-group-text" id="spam-count">العدد</span>
-              <input type="number" min="1" class="form-control"   id="count" placeholder="" name="count" aria-label="">
-            
-              <span class="input-group-text">السعر</span>
-              <input type="text" class="form-control" placeholder=""  id="price" name="price" aria-label="" >
-          
-              <span class="input-group-text">الاجمالي</span>
-              <input type="text" readonly  id="Total" class="form-control" placeholder="" aria-label="">
-        </div>
-        <div class="input-group mb-3">
-          <label id="count-error" class="error" for="count"></label>
-          <label id="price-error" class="error" for="price"></label>
-        </div>
-
-
-
-
-        <div class="input-group mb-4 form-input">
-        
-              <span class="input-group-text">حساب المدين</span>
-          
-          
-              <select class="form-select" id="DebtorAccount" name="DebtorAccount">
-                <optgroup label="الدليل المحاسبي" data-max-options="1">
-                  <%for(i of guides){%>
-                      <option value="<%=i._id%>"><%=i.name%></option>
-                  <%}%>
-                </optgroup>
-
-                <optgroup label="الموردون" data-max-options="1">
-                  <%for(i of suppliers){%>
-                      <option value="<%=i._id%>"><%=i.name%></option>
-                  <%}%>
-                </optgroup>
-
-                  <optgroup label="العملاء" data-max-options="1">
-                  <%for(i of clients){%>
-                      <option value="<%=i._id%>"><%=i.name%></option>
-                  <%}%>
-                </optgroup>
-                
-                  <optgroup label="الموظفين" data-max-options="1">
-                  <%for(i of employees){%>
-                      <option value="<%=i._id%>"><%=i.name%></option>
-                  <%}%>
-                </optgroup>
-
-                  <optgroup label="التكلفة" data-max-options="1">
-                  <%for(i of costs){%>
-                      <option value="<%=i._id%>"><%=i.name%></option>
-                  <%}%>
-                </optgroup>
-              </select>
-              <label id="DebtorAccount-error" class="error" for="DebtorAccount"></label>
-          
-          
-            <span class="input-group-text">حساب الدائن</span>
-              <select  class="form-select" id="CreditorAccount" name="CreditorAccount">
-                <optgroup label="الدليل المحاسبي" data-max-options="1">
-                <%for(i of guides){%>
-                    <option value="<%=i._id%>"><%=i.name%></option>
-                <%}%>
-              </optgroup>
-
-              <optgroup label="الموردون" data-max-options="1">
-                <%for(i of suppliers){%>
-                    <option value="<%=i._id%>"><%=i.name%></option>
-                <%}%>
-              </optgroup>
-
-                <optgroup label="العملاء" data-max-options="1">
-                <%for(i of clients){%>
-                    <option value="<%=i._id%>"><%=i.name%></option>
-                <%}%>
-              </optgroup>
-              
-                <optgroup label="الموظفين" data-max-options="1">
-                <%for(i of employees){%>
-                    <option value="<%=i._id%>"><%=i.name%></option>
-                <%}%>
-              </optgroup>
-
-                <optgroup label="التكلفة" data-max-options="1">
-                <%for(i of costs){%>
-                    <option value="<%=i._id%>"><%=i.name%></option>
-                <%}%>
-              </optgroup>
-              </select>
-          
-      </div>
-      <div class="input-group mb-3 form-input">
-        <label id="CreditorAccount-error" class="error" for="CreditorAccount"></label>
-      </div>
-
-      <input type="submit" class="btn btn-primary" value="انشاء" name="" id="">
-    
-      </div>
-
-    </form>
     </div>
 
-    </div>
-    
+  </div>
 
-
-    
-
-  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-    <div>
-      <p>
-        Top 10 Best Programming Languages To Learn In 2021?
-
-          Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
-
-          Make sure to let me know in the comments other videos you want to see and I will ensure to give 
-          Top 10 Best Programming Languages To Learn In 2021?
-
-          Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
-
-          Make sure to let me know in the comments other videos you want to see and I will ensure to give 
-          Top 10 Best Programming Languages To Learn In 2021?
-
-          Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
-
-          Make sure to let me know in the comments other videos you want to see and I will ensure to give 
-          Top 10 Best Programming Languages To Learn In 2021?
-
-          Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
-
-          Make sure to let me know in the comments other videos you want to see and I will ensure to give 
-          Top 10 Best Programming Languages To Learn In 2021?
-
-          Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
-
-          Make sure to let me know in the comments other videos you want to see and I will ensure to give 
-          Top 10 Best Programming Languages To Learn In 2021?
-
-          Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
-
-          Make sure to let me know in the comments other videos you want to see and I will ensure to give 
-    </p>
-    </div>
-    
 </div>
-
-
-
-  </div>
 
 
 

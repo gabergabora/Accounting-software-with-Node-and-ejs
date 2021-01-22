@@ -1,0 +1,139 @@
+<div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <form id="invoice-form">
+      <div class="FormTable body">
+
+      <label for="basic-url" class="form-label">انشاء فاتورة جديدة </label>
+
+      <div class="input-group mb-3">
+            <span class="input-group-text form-input" id="basic-addon3">الصنف</span>
+            <div class="col-md-4">
+              <select id="inputItem" class="form-select" name="selectItem">
+                <%for(i of items){%>
+                  <option value="<%=i._id%>"><%=i.name%></option>
+                  <%}%>
+              </select>
+            </div>
+            
+            <span class="input-group-text form-input">التاريخ</span>
+            <input class="form-control date" type="date" id="date" name="date">
+        </div>
+        <div class="input-group mb-3">
+              <label id="date-error" class="error" for="date"></label>
+        </div>
+        
+        <div class="input-group mb-3 form-input">
+          
+            <span class="input-group-text">شرح القيد</span>
+        
+            <input type="text" class="form-control" placeholder="" id="ExplainTheLimitation" aria-label="" name="ExplainTheLimitation">
+          
+            
+        </div>
+        <div class="input-group mb-3">
+          <label id="ExplainTheLimitation-error" class="error" for="ExplainTheLimitation"></label>
+        </div>
+
+
+
+        <div class="input-group mb-3 form-input">
+
+              <span class="input-group-text" id="spam-count">العدد</span>
+              <input type="number" min="1" class="form-control"   id="count" placeholder="" name="count" aria-label="">
+            
+              <span class="input-group-text">السعر</span>
+              <input type="text" class="form-control" placeholder=""  id="price" name="price" aria-label="" >
+          
+              <span class="input-group-text">الاجمالي</span>
+              <input type="text" readonly  id="Total" class="form-control" placeholder="" aria-label="">
+        </div>
+        <div class="input-group mb-3">
+          <label id="count-error" class="error" for="count"></label>
+          <label id="price-error" class="error" for="price"></label>
+        </div>
+
+
+
+
+        <div class="input-group mb-4 form-input">
+        
+              <span class="input-group-text">حساب المدين</span>
+          
+          
+              <select class="form-select" id="DebtorAccount" name="DebtorAccount">
+                <optgroup label="الدليل المحاسبي" data-max-options="1">
+                  <%for(i of guides){%>
+                      <option value="<%=i._id%>"><%=i.name%></option>
+                  <%}%>
+                </optgroup>
+
+                <optgroup label="الموردون" data-max-options="1">
+                  <%for(i of suppliers){%>
+                      <option value="<%=i._id%>"><%=i.name%></option>
+                  <%}%>
+                </optgroup>
+
+                  <optgroup label="العملاء" data-max-options="1">
+                  <%for(i of clients){%>
+                      <option value="<%=i._id%>"><%=i.name%></option>
+                  <%}%>
+                </optgroup>
+                
+                  <optgroup label="الموظفين" data-max-options="1">
+                  <%for(i of employees){%>
+                      <option value="<%=i._id%>"><%=i.name%></option>
+                  <%}%>
+                </optgroup>
+
+                  <optgroup label="التكلفة" data-max-options="1">
+                  <%for(i of costs){%>
+                      <option value="<%=i._id%>"><%=i.name%></option>
+                  <%}%>
+                </optgroup>
+              </select>
+              <label id="DebtorAccount-error" class="error" for="DebtorAccount"></label>
+          
+          
+            <span class="input-group-text">حساب الدائن</span>
+              <select  class="form-select" id="CreditorAccount" name="CreditorAccount">
+                <optgroup label="الدليل المحاسبي" data-max-options="1">
+                <%for(i of guides){%>
+                    <option value="<%=i._id%>"><%=i.name%></option>
+                <%}%>
+              </optgroup>
+
+              <optgroup label="الموردون" data-max-options="1">
+                <%for(i of suppliers){%>
+                    <option value="<%=i._id%>"><%=i.name%></option>
+                <%}%>
+              </optgroup>
+
+                <optgroup label="العملاء" data-max-options="1">
+                <%for(i of clients){%>
+                    <option value="<%=i._id%>"><%=i.name%></option>
+                <%}%>
+              </optgroup>
+              
+                <optgroup label="الموظفين" data-max-options="1">
+                <%for(i of employees){%>
+                    <option value="<%=i._id%>"><%=i.name%></option>
+                <%}%>
+              </optgroup>
+
+                <optgroup label="التكلفة" data-max-options="1">
+                <%for(i of costs){%>
+                    <option value="<%=i._id%>"><%=i.name%></option>
+                <%}%>
+              </optgroup>
+              </select>
+          
+      </div>
+      <div class="input-group mb-3 form-input">
+        <label id="CreditorAccount-error" class="error" for="CreditorAccount"></label>
+      </div>
+
+      <input type="submit" class="btn btn-primary" value="انشاء" name="" id="">
+    
+      </div>
+
+</form>
+</div>

@@ -1,5 +1,4 @@
-
-<%if(user.role =='accounter'){%>
+<%if(user &&user.role =='accounter'){%>
 <div class="container">
 <nav aria-label="breadcrumb" class="breadcrumbs">
     <ol class="breadcrumb">
@@ -21,7 +20,7 @@
 </div>
 <%}%>
 
-<%if(user.role =='admin'){%>
+<%if(user && user.role =='admin'){%>
 <div class="container">
     <nav aria-label="breadcrumb" class="breadcrumbs">
         <ol class="breadcrumb">
@@ -34,7 +33,7 @@
 <%}%>
 
 
-<%if(user.role =='user'){%>
+<%if(user && user.role =='user'){%>
 <div class="container">
     <nav aria-label="breadcrumb" class="breadcrumbs">
         <ol class="breadcrumb">

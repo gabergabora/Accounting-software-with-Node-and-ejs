@@ -1,0 +1,30 @@
+<nav class="page-navigation  example" aria-label="Page navigation example">
+    <ul class="pagination pagination-sm">
+
+      <% if (Pages > 0) { %>
+
+        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+        <% if (i !== 1) { %>
+          <li class="page-item disabled"><a class="page-link">السابق ...</a></li>
+        <% } %>
+
+          <% if(Number(current)>6){var start =  (Number(current) - 6)}else{start = 1}%>
+
+        <% for (i=start ; i <= (Number(current) + 6) && i <= Pages; i++) { %>
+        
+            <% if (i == current) { %>
+              <li class="page-item active"><a class="page-link" href="#"><%= i %></a></li>
+            <% } else { %>
+                <li class="page-item "><a class="page-link " href="/accounting/dailyAgenda/<%=i%>"><%=i%></a></li>
+             <% } %>
+        
+             <% if (i == Number(current) + 6 && i < Pages) { %>
+              <li class="page-item disabled" ><a class="page-link ">التالي...</a></li>
+             <% } %>
+
+
+        <% } %>
+    
+    <% } %>
+    </ul>
+  </nav>

@@ -9,7 +9,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           
-          <%if(user.role =='accounter'){%>
+          <%if(user &&user.role =='accounter'){%>
            <!-- <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">دفاتر اليومية</a>
           </li> -->
@@ -48,7 +48,7 @@
             
            </ul>
 
-        <%if(user.firstName){%>
+        <%if(user &&user.firstName){%>
         <div class="me-2">
           <div class="badge bg-warning text-dark"><%=user.firstName%> <%=user.lastName%></div> 
         </div>

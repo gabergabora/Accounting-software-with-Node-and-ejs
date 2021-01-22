@@ -1,0 +1,239 @@
+<p>استخدم الادوات في شريط البحث لكي تجد ما تبحث عنة بسهولة:</p>  
+    <!-- Search -->
+
+
+      <div class="container-search ">
+        
+        <!-- <p class="navbar-brand navbarSearch" >أدوات البحث </p> -->
+        <div class="input-group mb-3 form-input navSearch">
+       
+        <form class="FormSearch">
+
+            <div class="row rowOne">
+                <div class="col-2 ">
+                    <h5 class="navbarSearch">أدوات البحث</h5>
+                </div>
+              <div class="col-3 ">
+                <div  class="input-group mb-3 form-input">
+                <span class="input-group-text form-input">رقم الفاتورة</span>
+                  <input class="form-control" type="search" placeholder="رقم الفاتورة" aria-label="Search">
+                  </div>
+              </div>
+              <div class="col-3 ">
+                  <div  class="input-group mb-3 form-input">
+                      <span class="input-group-text form-input">من</span>
+                      <input class="form-control me-2" type="date" placeholder="بحث بالتاريخ" aria-label="Search">
+                  </div>
+              </div>
+              <div class="col-3 ">
+                  <div  class="input-group mb-3 form-input dateTo">
+                      <span class="input-group-text form-input">الي</span>
+                      <input class="form-control me-2" type="date" placeholder="بحث بالتاريخ" aria-label="Search">
+                  </div>
+              </div>
+              <!-- <div class="col-2 ">
+                <input class="form-control me-2" type="search" placeholder="بحث بالعدد" aria-label="Search">
+              </div>
+              <div class="col-2 ">
+                <input class="form-control me-2" type="search" placeholder="بحث بالسعر" aria-label="Search">
+              </div>
+              <div class="col-2 ">
+                <input class="form-control me-2" type="search" placeholder="بحث بالجمالي" aria-label="Search">
+              </div> -->
+            
+
+
+            <!-- <div class="row " > -->
+              <div class="col-3 rowTwo">
+                    <div  class="input-group mb-3 form-input item">
+                          <span class="input-group-text form-input" >الصنف</span>
+                          <select id="inputItemSearch" class="form-select" name="selectItem">
+                              <option value="">تحديد صنف</option>
+                            <%for(i of items){%>
+                              <option value="<%=i._id%>"><%=i.name%></option>
+                              <%}%>
+                          </select>
+                    </div>
+               </div>
+              <div class="col-3 ">
+                  <div  class="input-group mb-3 form-input DebtorAccount">
+                        <span class="input-group-text " style="margin-right: 6px;" >ح/المدين</span>
+                        <select class="form-select" id="DebtorAccountSearch" name="DebtorAccount">
+                            <option value="">تحديد حساب</option>
+
+                          <optgroup label="الدليل المحاسبي" data-max-options="1">
+                            <%for(i of guides){%>
+                                <option value="<%=i._id%>"><%=i.name%></option>
+                            <%}%>
+                          </optgroup>
+            
+                          <optgroup label="الموردون" data-max-options="1">
+                            <%for(i of suppliers){%>
+                                <option value="<%=i._id%>"><%=i.name%></option>
+                            <%}%>
+                          </optgroup>
+            
+                            <optgroup label="العملاء" data-max-options="1">
+                            <%for(i of clients){%>
+                                <option value="<%=i._id%>"><%=i.name%></option>
+                            <%}%>
+                          </optgroup>
+                          
+                            <optgroup label="الموظفين" data-max-options="1">
+                            <%for(i of employees){%>
+                                <option value="<%=i._id%>"><%=i.name%></option>
+                            <%}%>
+                          </optgroup>
+            
+                            <optgroup label="التكلفة" data-max-options="1">
+                            <%for(i of costs){%>
+                                <option value="<%=i._id%>"><%=i.name%></option>
+                            <%}%>
+                          </optgroup>
+                        </select>
+                  </div>
+              </div>
+              <div class="col-3 ">
+                  <div  class="input-group mb-3 form-input CreditorAccount">
+                        <span class="input-group-text " style="margin-right: 6px;" >ح/الدائن</span>
+                        <select  class="form-select" id="CreditorAccountSearch" name="CreditorAccount">
+                            <option value="">تحديد حساب</option>
+
+                          <optgroup label="الدليل المحاسبي" data-max-options="1">
+                          <%for(i of guides){%>
+                              <option value="<%=i._id%>"><%=i.name%></option>
+                          <%}%>
+                        </optgroup>
+            
+                        <optgroup label="الموردون" data-max-options="1">
+                          <%for(i of suppliers){%>
+                              <option value="<%=i._id%>"><%=i.name%></option>
+                          <%}%>
+                        </optgroup>
+            
+                          <optgroup label="العملاء" data-max-options="1">
+                          <%for(i of clients){%>
+                              <option value="<%=i._id%>"><%=i.name%></option>
+                          <%}%>
+                        </optgroup>
+                        
+                          <optgroup label="الموظفين" data-max-options="1">
+                          <%for(i of employees){%>
+                              <option value="<%=i._id%>"><%=i.name%></option>
+                          <%}%>
+                        </optgroup>
+            
+                          <optgroup label="التكلفة" data-max-options="1">
+                          <%for(i of costs){%>
+                              <option value="<%=i._id%>"><%=i.name%></option>
+                          <%}%>
+                        </optgroup>
+                        </select>
+                  </div>
+              </div>
+              <div  class="input-group mb-3 form-input   ">
+              <div class="col-1 submit ">
+                <button class="btn btn-success " style="margin-right: 1px;" type="submit">بحث</button>
+              </div>
+            </div>
+            
+        <!-- </div> -->
+       
+    </div>
+
+
+          <!-- <div  class="input-group mb-3 form-input">
+          <input class="form-control me-2 col-2" type="search" placeholder="رقم الفاتورة" aria-label="Search">
+          <span class="input-group-text form-input">من</span>
+          <input class="form-control me-2" type="date" placeholder="بحث بالتاريخ" aria-label="Search">
+          <span class="input-group-text form-input">الي</span>
+          <input class="form-control me-2" type="date" placeholder="بحث بالتاريخ" aria-label="Search">
+          </div> 
+          <div  class="input-group mb-3 form-input">
+            <input class="form-control me-2" type="search" placeholder="بحث بالعدد" aria-label="Search">
+            <input class="form-control me-2" type="search" placeholder="بحث بالسعر" aria-label="Search">
+            <input class="form-control me-2" type="search" placeholder="بحث بالجمالي" aria-label="Search">
+          </div>
+          <div  class="input-group mb-3 form-input">
+            <span class="input-group-text form-input" >الصنف</span>
+              <select id="inputItemSearch" class="form-select" name="selectItem">
+                <%for(i of items){%>
+                  <option value="<%=i._id%>"><%=i.name%></option>
+                  <%}%>
+              </select>
+            <span class="input-group-text " style="margin-right: 6px;" >حساب المدين</span>
+            <select class="form-select" id="DebtorAccountSearch" name="DebtorAccount">
+              <optgroup label="الدليل المحاسبي" data-max-options="1">
+                <%for(i of guides){%>
+                    <option value="<%=i._id%>"><%=i.name%></option>
+                <%}%>
+              </optgroup>
+
+              <optgroup label="الموردون" data-max-options="1">
+                <%for(i of suppliers){%>
+                    <option value="<%=i._id%>"><%=i.name%></option>
+                <%}%>
+              </optgroup>
+
+                <optgroup label="العملاء" data-max-options="1">
+                <%for(i of clients){%>
+                    <option value="<%=i._id%>"><%=i.name%></option>
+                <%}%>
+              </optgroup>
+              
+                <optgroup label="الموظفين" data-max-options="1">
+                <%for(i of employees){%>
+                    <option value="<%=i._id%>"><%=i.name%></option>
+                <%}%>
+              </optgroup>
+
+                <optgroup label="التكلفة" data-max-options="1">
+                <%for(i of costs){%>
+                    <option value="<%=i._id%>"><%=i.name%></option>
+                <%}%>
+              </optgroup>
+            </select>
+          <span class="input-group-text " style="margin-right: 6px;" >حساب الدائن</span>
+            <select  class="form-select" id="CreditorAccountSearch" name="CreditorAccount">
+              <optgroup label="الدليل المحاسبي" data-max-options="1">
+              <%for(i of guides){%>
+                  <option value="<%=i._id%>"><%=i.name%></option>
+              <%}%>
+            </optgroup>
+
+            <optgroup label="الموردون" data-max-options="1">
+              <%for(i of suppliers){%>
+                  <option value="<%=i._id%>"><%=i.name%></option>
+              <%}%>
+            </optgroup>
+
+              <optgroup label="العملاء" data-max-options="1">
+              <%for(i of clients){%>
+                  <option value="<%=i._id%>"><%=i.name%></option>
+              <%}%>
+            </optgroup>
+            
+              <optgroup label="الموظفين" data-max-options="1">
+              <%for(i of employees){%>
+                  <option value="<%=i._id%>"><%=i.name%></option>
+              <%}%>
+            </optgroup>
+
+              <optgroup label="التكلفة" data-max-options="1">
+              <%for(i of costs){%>
+                  <option value="<%=i._id%>"><%=i.name%></option>
+              <%}%>
+            </optgroup>
+            </select>
+            <button class="btn btn-success " style="margin-right: 6px;" type="submit">بحث</button>
+          
+          </div>
+        -->
+        </form>
+        </div>
+      </div>
+    
+      <br>
+      <input class="form-control" id="myInput" type="text" placeholder="تصفية...">
+      <br>
+       <!-- End Search -->
