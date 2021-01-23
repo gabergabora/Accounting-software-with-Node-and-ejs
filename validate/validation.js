@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const secret = 'This Is Any Secret Key To Encrypt Mu Data';
-const userModel = require("../models/users.model");
+const userModel = require("../Models/users.model");
 
 
 

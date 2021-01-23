@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const secret = 'This Is Any Secret Key To Encrypt Mu Data';
-const userModel = require("../models/users.model");
+const userModel = require("../Models/users.model");
 const cost_centerModal = require("../Models/cost_center.model")
 const itemModal = require("../Models/item.model")
 const employeesModal = require("../Models/employees.model")
