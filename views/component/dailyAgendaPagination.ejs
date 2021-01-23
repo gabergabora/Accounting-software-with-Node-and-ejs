@@ -13,9 +13,17 @@
         <% for (i=start ; i <= (Number(current) + 6) && i <= Pages; i++) { %>
         
             <% if (i == current) { %>
-              <li class="page-item active"><a class="page-link" href="#"><%= i %></a></li>
+                  <%if(search){%>
+                        <li class="page-item active"><a class="page-link" href="/accounting/dailyAgenda/<%=i%>/<%=search%>"><%= i %></a></li>
+                    <%}else{%>
+                        <li class="page-item active"><a class="page-link" href="/accounting/dailyAgenda/<%=i%>"><%= i %></a></li>
+                  <%}%>
             <% } else { %>
-                <li class="page-item "><a class="page-link " href="/accounting/dailyAgenda/<%=i%>"><%=i%></a></li>
+                  <%if(search){%>
+                        <li class="page-item "><a class="page-link" href="/accounting/dailyAgenda/<%=i%>/<%=search%>"><%= i %></a></li>
+                    <%}else{%>
+                        <li class="page-item "><a class="page-link" href="/accounting/dailyAgenda/<%=i%>"><%= i %></a></li>
+                    <%}%>
              <% } %>
         
              <% if (i == Number(current) + 6 && i < Pages) { %>
