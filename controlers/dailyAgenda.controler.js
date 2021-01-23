@@ -11,18 +11,70 @@ const accounting_guideModel = require('../Models/accounting_guide.model')
 const invoicesModal = require('../Models/invoices.modal');
 
 
+// async function supplierAccounting(){
+// var supps = await accounting_guideModel.find({type:'supplier'}).exec();
+// // var DebtorAccount   = await invoicesModal.find({DebtorAccount:supps}).populate('DebtorAccount')
+// // var CreditorAccount = await invoicesModal.find({CreditorAccount:supps}).populate('CreditorAccount')
 
-// wichCollection('5ff6e715714aed25a813ba09')
-function GetFormattedDate() {
-    var todayTime = new Date();
-    var month = format(todayTime .getMonth() + 1);
-    var day = format(todayTime .getDate());
-    var year = format(todayTime .getFullYear());
-    return month + "/" + day + "/" + year;
-}
+// // send array of objs , every one contain {'nameOfSupplier':'ahmed' , 'TotalDebtorAccount':45000 , TotalCreditorAccount:2000 , ''}
+
+// var suppliers = []
+
+// for (i of supps ){
+// var DebtorAccount   = await invoicesModal.find({DebtorAccount:i._id}).populate('DebtorAccount')
+// var CreditorAccount   = await invoicesModal.find({CreditorAccount:i._id}).populate('CreditorAccount')
+// // console.log(DebtorAccount)
+
+// var sup = {}
+// var TotalD = 0
+// var TotalC = 0
+// // DebtorAccount
+// if(DebtorAccount.length !=0){
+//     for(x of DebtorAccount){
+//         sup.name  = x.DebtorAccount.name
+//         TotalD += x.Total
+//     }
+//     sup.DebtorAccount = TotalD
+
+// }
+
+// // CreditorAccount
+// if(CreditorAccount.length !=0){
+//     for(y of CreditorAccount){
+//     TotalC += y.Total
+//     }
+//     sup.DebtorAccount = TotalC
+// }
+// suppliers.push(sup)
+// console.log(sup)
+
+// }
+// console.log(suppliers)
+// }
+// supplierAccounting()
 
 exports.dailyAgenda = async (req,res)=>{
 try{
+    let query = req.query;
+    let newQuery = {}
+
+    if(query.invoiceNumber)  newQuery.invoiceNumber = query.invoiceNumber
+    if(query.item)  newQuery.item = query.item
+    if(query.DebtorAccount)  newQuery.DebtorAccount = query.DebtorAccount
+    if(query.CreditorAccount)  newQuery.CreditorAccount = query.CreditorAccount
+    
+    if(query.fromDate && query.toDate){
+        newQuery.date ={
+            $gte: query.fromDate,
+            $lt: query.toDate
+        }
+    }else if(query.fromDate) {
+        newQuery.date = query.fromDate
+    }else if(query.toDate)  {
+        newQuery.date ={$lt: query.toDate}
+    }
+      
+    
 var guide = await accounting_guideModel.find({type:'guide'}).exec();
 var cost  = await accounting_guideModel.find({type:'cost'}).exec();
 var item  = await accounting_guideModel.find({type:'item'}).exec();
@@ -34,7 +86,7 @@ var client  = await accounting_guideModel.find({type:'client'}).exec();
 let count = await invoicesModal.countDocuments()
 var perPage = 50 ;
 var page = (req.params.curentPage <=0)?1:req.params.curentPage || 1;
-const invoice = await invoicesModal.find()
+var invoice = await invoicesModal.find(newQuery)
 .sort({_id:-1})
 .populate('item')
 .populate('DebtorAccount') // , ongoing :true
@@ -55,6 +107,8 @@ return res.render('dailyAgenda',{
         invoices:invoice,
         Pages:Math.ceil(count / perPage),
         current: page,
+        query:query,
+        search:req._parsedOriginalUrl.search
     })
 }catch(e){
 }

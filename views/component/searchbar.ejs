@@ -1,4 +1,4 @@
-<p>استخدم الادوات في شريط البحث لكي تجد ما تبحث عنة بسهولة:</p>  
+<p class="pSearch">استخدم الادوات في شريط البحث لكي تجد ما تبحث عنة بسهولة:</p>  
     <!-- Search -->
 
 
@@ -16,19 +16,31 @@
               <div class="col-3 ">
                 <div  class="input-group mb-3 form-input">
                 <span class="input-group-text form-input">رقم الفاتورة</span>
-                  <input class="form-control" type="search" placeholder="رقم الفاتورة" aria-label="Search">
+                <%if(query.invoiceNumber){%>
+                  <input class="form-control" value="<%=query.invoiceNumber%>"  name="invoiceNumber" type="search" placeholder="رقم الفاتورة" aria-label="Search">
+                  <%}else{%>
+                  <input class="form-control"  name="invoiceNumber" type="search" placeholder="رقم الفاتورة" aria-label="Search">
+                  <%}%>
                   </div>
               </div>
               <div class="col-3 ">
                   <div  class="input-group mb-3 form-input">
                       <span class="input-group-text form-input">من</span>
-                      <input class="form-control me-2" type="date" placeholder="بحث بالتاريخ" aria-label="Search">
+                      <%if(query.fromDate){%>
+                      <input class="form-control me-2" value="<%=query.fromDate%>" name="fromDate" type="date" placeholder="بحث بالتاريخ" aria-label="Search">
+                      <%}else{%>
+                      <input class="form-control me-2" name="fromDate" type="date" placeholder="بحث بالتاريخ" aria-label="Search">
+                        <%}%>
                   </div>
               </div>
               <div class="col-3 ">
                   <div  class="input-group mb-3 form-input dateTo">
                       <span class="input-group-text form-input">الي</span>
-                      <input class="form-control me-2" type="date" placeholder="بحث بالتاريخ" aria-label="Search">
+                      <%if(query.toDate){%>
+                      <input class="form-control me-2" value="<%=query.toDate%>" name="toDate" type="date" placeholder="بحث بالتاريخ" aria-label="Search">
+                      <%}else{%>
+                      <input class="form-control me-2"  name="toDate" type="date" placeholder="بحث بالتاريخ" aria-label="Search">
+                      <%}%>
                   </div>
               </div>
               <!-- <div class="col-2 ">
@@ -47,47 +59,73 @@
               <div class="col-3 rowTwo">
                     <div  class="input-group mb-3 form-input item">
                           <span class="input-group-text form-input" >الصنف</span>
-                          <select id="inputItemSearch" class="form-select" name="selectItem">
+                          <select id="inputItemSearch" class="form-select" name="item">
                               <option value="">تحديد صنف</option>
-                            <%for(i of items){%>
-                              <option value="<%=i._id%>"><%=i.name%></option>
-                              <%}%>
+                              <%for(i of items){%>
+                                <%if(query.item && query.item ==i._id){%>
+                                     <option selected value="<%=i._id%>"><%=i.name%></option>
+                                  <%}else{%>
+                                    <option value="<%=i._id%>"><%=i.name%></option>
+                                    <%}%>
+                                <%}%>
                           </select>
                     </div>
                </div>
               <div class="col-3 ">
                   <div  class="input-group mb-3 form-input DebtorAccount">
-                        <span class="input-group-text " style="margin-right: 6px;" >ح/المدين</span>
+                        <span class="input-group-text " >ح/المدين</span>
                         <select class="form-select" id="DebtorAccountSearch" name="DebtorAccount">
                             <option value="">تحديد حساب</option>
-
+                            
                           <optgroup label="الدليل المحاسبي" data-max-options="1">
                             <%for(i of guides){%>
-                                <option value="<%=i._id%>"><%=i.name%></option>
+                              <%if(query.DebtorAccount && query.DebtorAccount ==i._id){%>
+                                <option selected value="<%=i._id%>"><%=i.name%></option>
+                                <%}else{%>
+                                  <option value="<%=i._id%>"><%=i.name%></option>
+                                  <%}%>
+                                
                             <%}%>
                           </optgroup>
             
                           <optgroup label="الموردون" data-max-options="1">
                             <%for(i of suppliers){%>
-                                <option value="<%=i._id%>"><%=i.name%></option>
+                              <%if(query.DebtorAccount && query.DebtorAccount ==i._id){%>
+                                <option selected value="<%=i._id%>"><%=i.name%></option>
+                                <%}else{%>
+                                  <option value="<%=i._id%>"><%=i.name%></option>
+                                  <%}%>
+                                
                             <%}%>
                           </optgroup>
             
                             <optgroup label="العملاء" data-max-options="1">
                             <%for(i of clients){%>
-                                <option value="<%=i._id%>"><%=i.name%></option>
+                              <%if(query.DebtorAccount && query.DebtorAccount ==i._id){%>
+                                <option selected value="<%=i._id%>"><%=i.name%></option>
+                                <%}else{%>
+                                  <option value="<%=i._id%>"><%=i.name%></option>
+                                  <%}%>
                             <%}%>
                           </optgroup>
                           
                             <optgroup label="الموظفين" data-max-options="1">
                             <%for(i of employees){%>
-                                <option value="<%=i._id%>"><%=i.name%></option>
+                                 <%if(query.DebtorAccount && query.DebtorAccount ==i._id){%>
+                                <option selected value="<%=i._id%>"><%=i.name%></option>
+                                <%}else{%>
+                                  <option value="<%=i._id%>"><%=i.name%></option>
+                                  <%}%>
                             <%}%>
                           </optgroup>
             
                             <optgroup label="التكلفة" data-max-options="1">
                             <%for(i of costs){%>
-                                <option value="<%=i._id%>"><%=i.name%></option>
+                                 <%if(query.DebtorAccount && query.DebtorAccount ==i._id){%>
+                                <option selected value="<%=i._id%>"><%=i.name%></option>
+                                <%}else{%>
+                                  <option value="<%=i._id%>"><%=i.name%></option>
+                                  <%}%>
                             <%}%>
                           </optgroup>
                         </select>
@@ -101,37 +139,57 @@
 
                           <optgroup label="الدليل المحاسبي" data-max-options="1">
                           <%for(i of guides){%>
-                              <option value="<%=i._id%>"><%=i.name%></option>
+                            <%if(query.CreditorAccount && query.CreditorAccount ==i._id){%>
+                              <option selected value="<%=i._id%>"><%=i.name%></option>
+                              <%}else{%>
+                                <option value="<%=i._id%>"><%=i.name%></option>
+                                <%}%>
                           <%}%>
                         </optgroup>
             
                         <optgroup label="الموردون" data-max-options="1">
                           <%for(i of suppliers){%>
-                              <option value="<%=i._id%>"><%=i.name%></option>
+                            <%if(query.CreditorAccount && query.CreditorAccount ==i._id){%>
+                              <option selected value="<%=i._id%>"><%=i.name%></option>
+                              <%}else{%>
+                                <option value="<%=i._id%>"><%=i.name%></option>
+                                <%}%>
                           <%}%>
                         </optgroup>
             
                           <optgroup label="العملاء" data-max-options="1">
                           <%for(i of clients){%>
-                              <option value="<%=i._id%>"><%=i.name%></option>
+                            <%if(query.CreditorAccount && query.CreditorAccount ==i._id){%>
+                              <option selected value="<%=i._id%>"><%=i.name%></option>
+                              <%}else{%>
+                                <option value="<%=i._id%>"><%=i.name%></option>
+                                <%}%>
                           <%}%>
                         </optgroup>
                         
                           <optgroup label="الموظفين" data-max-options="1">
                           <%for(i of employees){%>
-                              <option value="<%=i._id%>"><%=i.name%></option>
+                            <%if(query.CreditorAccount && query.CreditorAccount ==i._id){%>
+                              <option selected value="<%=i._id%>"><%=i.name%></option>
+                              <%}else{%>
+                                <option value="<%=i._id%>"><%=i.name%></option>
+                                <%}%>
                           <%}%>
                         </optgroup>
             
                           <optgroup label="التكلفة" data-max-options="1">
                           <%for(i of costs){%>
-                              <option value="<%=i._id%>"><%=i.name%></option>
+                            <%if(query.CreditorAccount && query.CreditorAccount ==i._id){%>
+                              <option selected value="<%=i._id%>"><%=i.name%></option>
+                              <%}else{%>
+                                <option value="<%=i._id%>"><%=i.name%></option>
+                                <%}%>
                           <%}%>
                         </optgroup>
                         </select>
                   </div>
               </div>
-              <div  class="input-group mb-3 form-input   ">
+              <div  class="input-group mb-3 form-input   " style="margin-bottom: .6rem !important;">
               <div class="col-1 submit ">
                 <button class="btn btn-success " style="margin-right: 1px;" type="submit">بحث</button>
               </div>

@@ -22,7 +22,7 @@
       <a class="nav-link " id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">اضافة فاتورة</a>
     </li>
     <li class="nav-item" role="presentation">
-      <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+      <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">حسابات الموردين</a>
     </li>
   </ul>
 
@@ -30,15 +30,16 @@
 
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active " id="home" role="tabpanel" aria-labelledby="home-tab">
+       <!-- Search -->
+    <%- include('./component/searchbar') %>
+    <!-- End Search -->
+   
 <%if(invoices.length == 0){%>
   <div class="alert alert-primary   alert-notInvoices">
     لا يوجد فاتورة يومية حتي الان !
   </div>
   <%}else{%>
 
-    <!-- Search -->
-    <%- include('./component/searchbar') %>
-    <!-- End Search -->
    
     <!-- Table -->
     <%- include('./component/tableDailyAgenda') %>
@@ -65,40 +66,8 @@
     
 
       <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-        <div>
-          <p>
-            Top 10 Best Programming Languages To Learn In 2021?
+    <%- include('./component/suppliers') %>
 
-              Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
-
-              Make sure to let me know in the comments other videos you want to see and I will ensure to give 
-              Top 10 Best Programming Languages To Learn In 2021?
-
-              Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
-
-              Make sure to let me know in the comments other videos you want to see and I will ensure to give 
-              Top 10 Best Programming Languages To Learn In 2021?
-
-              Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
-
-              Make sure to let me know in the comments other videos you want to see and I will ensure to give 
-              Top 10 Best Programming Languages To Learn In 2021?
-
-              Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
-
-              Make sure to let me know in the comments other videos you want to see and I will ensure to give 
-              Top 10 Best Programming Languages To Learn In 2021?
-
-              Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
-
-              Make sure to let me know in the comments other videos you want to see and I will ensure to give 
-              Top 10 Best Programming Languages To Learn In 2021?
-
-              Hi Friends! Today I am sharing with you the top 10 best programming languages to learn in 2021. 
-
-              Make sure to let me know in the comments other videos you want to see and I will ensure to give 
-        </p>
-        </div>
         
     </div>
 
@@ -218,7 +187,7 @@ $("#invoice-form").on('submit',(e)=>{
   data  : data
 }).then(
   res=>{
-    console.log(res.data)
+
   if(res.data.status==true){
     Toast.fire({
       icon: 'success',
@@ -231,12 +200,13 @@ $("#invoice-form").on('submit',(e)=>{
      $("#price").val('');
      $("#Total").val('');
     let invoice = res.data.invoice;
-
-     // append new row
+    $(".alert-notInvoices").remove();
+   
+    // append new row
      $("#myTable").prepend(`
 
      <tr id="row_inovice_${invoice._id}">
-      <th scope="row">  ${$( "#myTable  tr").length +1}  </th>
+      <th scope="row">  ${ $( "#myTable  tr").length +1}  </th>
       <td class="invoiceNumber"> ${invoice.invoiceNumber} </td>
       
       <td id="invoiceDate_${invoice._id}">                  ${ new Date(invoice.date).toISOString().slice(0,10)} </td>

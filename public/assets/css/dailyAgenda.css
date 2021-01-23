@@ -17,7 +17,8 @@
 }
 .container{
     margin:auto;
-    width:100%
+    width:100%;
+    margin-top: 10px;
 }
 .table {
 /* width: max-content; */
@@ -52,17 +53,35 @@ color: antiquewhite;
 }
 
 .rowTwo{
-margin-right: 192px;
+margin-right: 16.4%;
 }
 
 
 
 .alert-notInvoices{
-margin-top: 50px !important
+margin-top: 30px !important
 }
 
+.submit{
+margin-right: 50%;
+}
 
-
+.pSearch{
+margin-top: 15px;
+}
+/* ///////////////////// */
+.suppliersDIV{
+    margin: auto;
+    margin-top: 15px;
+}
+.suppliersSummary{
+margin: auto;
+width: 100%;
+margin-top: 30px;
+height: 174.3px;
+background-color:#2e3e4c ;
+color:antiquewhite ;
+}
 @media (max-width: 1200px) {
 .container{
     margin-right: 10px;

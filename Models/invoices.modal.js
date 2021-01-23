@@ -16,7 +16,7 @@ let invoice = new Schema({
     DebtorAccount   : {
                         type:Schema.ObjectId,
                         ref:'accounting_guide'
-                        },
+                    },
     CreditorAccount : {
         type:Schema.ObjectId,
         ref : 'accounting_guide',

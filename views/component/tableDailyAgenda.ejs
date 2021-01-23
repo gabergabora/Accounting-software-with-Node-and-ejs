@@ -21,7 +21,7 @@
           <%for( i in invoices){%>
           
             <tr id="row_inovice_<%=invoices[i]._id%>">
-              <th scope="row"> <%=(50 -i)%></th>
+              <th scope="row"> <%=(invoices.length -i)%></th>
               <td class="invoiceNumber"><%=invoices[i].invoiceNumber%> </td>
               <% let invoiceDateE = new Date(invoices[i].date).toISOString().slice(0,10) %>
               <td id="invoiceDate_<%=invoices[i]._id%>"> <%= invoiceDateE%>  </td>
