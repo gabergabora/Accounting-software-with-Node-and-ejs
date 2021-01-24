@@ -1,0 +1,36 @@
+<div class="suppliersSummary">
+    <h4>ملخص العملاء</h4>
+    </div>
+    
+    <div class="suppliersDIV"  style="overflow-x:auto;">
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">العميل</th>
+                <th scope="col">المشتريات</th>
+                <th scope="col">السداد</th>
+                <th scope="col">الرصيد</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- invoices -->
+           
+          
+              <%for(i of clienstsSummary){%>
+                <tr>
+                  <th scope="row"> 1 </th>
+                  <td><%=i.name%></td>
+                  <td><%=i.DebtorAccount%></td>
+                  <td><%=i.CreditorAccount%></td>
+                  <td><%=i.TheNet%></td>
+                </tr>
+               <%}%>
+    
+            </tbody>
+          </table>
+    </div>
+    
+    <script>
+     
+    </script>

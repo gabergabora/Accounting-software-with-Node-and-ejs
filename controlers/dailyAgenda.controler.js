@@ -11,50 +11,62 @@ const accounting_guideModel = require('../Models/accounting_guide.model')
 const invoicesModal = require('../Models/invoices.modal');
 
 
-// async function supplierAccounting(){
-// var supps = await accounting_guideModel.find({type:'supplier'}).exec();
-// // var DebtorAccount   = await invoicesModal.find({DebtorAccount:supps}).populate('DebtorAccount')
-// // var CreditorAccount = await invoicesModal.find({CreditorAccount:supps}).populate('CreditorAccount')
+const  SummaryOfSuppliers_Clients = async (type)=>{
+var supps = await accounting_guideModel.find({type:type}).exec();
+// send array of objs , every one contain {'nameOfSupplier':'ahmed' , 'TotalDebtorAccount':45000 , TotalCreditorAccount:2000 , ''}
 
-// // send array of objs , every one contain {'nameOfSupplier':'ahmed' , 'TotalDebtorAccount':45000 , TotalCreditorAccount:2000 , ''}
+var suppliers = []
 
-// var suppliers = []
+for (i of supps ){
+var invpices_DebtorAccount   = await invoicesModal.find({DebtorAccount:i._id}).populate('DebtorAccount')
+var invpices_CreditorAccount   = await invoicesModal.find({CreditorAccount:i._id}).populate('CreditorAccount')
 
-// for (i of supps ){
-// var DebtorAccount   = await invoicesModal.find({DebtorAccount:i._id}).populate('DebtorAccount')
-// var CreditorAccount   = await invoicesModal.find({CreditorAccount:i._id}).populate('CreditorAccount')
-// // console.log(DebtorAccount)
 
-// var sup = {}
-// var TotalD = 0
-// var TotalC = 0
-// // DebtorAccount
-// if(DebtorAccount.length !=0){
-//     for(x of DebtorAccount){
-//         sup.name  = x.DebtorAccount.name
-//         TotalD += x.Total
-//     }
-//     sup.DebtorAccount = TotalD
+var sup = {}
+var TotalD = 0
+var TotalC = 0
 
-// }
+// save name of supplier 
+sup.name  = i.name
 
-// // CreditorAccount
-// if(CreditorAccount.length !=0){
-//     for(y of CreditorAccount){
-//     TotalC += y.Total
-//     }
-//     sup.DebtorAccount = TotalC
-// }
-// suppliers.push(sup)
-// console.log(sup)
+// DebtorAccount
+if(invpices_DebtorAccount.length !=0){
+    for(x of invpices_DebtorAccount){
+        TotalD += x.Total
+    }
+    sup.DebtorAccount = TotalD
 
-// }
+}else{
+    sup.DebtorAccount = 0
+}
+
+// CreditorAccount
+if(invpices_CreditorAccount.length !=0){
+    for(y of invpices_CreditorAccount){
+    TotalC += y.Total
+    }
+    sup.CreditorAccount = TotalC
+}else{
+    sup.CreditorAccount = 0
+}
+sup.TheNet = Number(sup.DebtorAccount) - Number(sup.CreditorAccount)
+
+suppliers.push(sup)
+
+}
 // console.log(suppliers)
-// }
-// supplierAccounting()
+return(suppliers)
+}
 
+
+  
+
+// Get Daily Agenda Page
 exports.dailyAgenda = async (req,res)=>{
 try{
+    let suppliers_S = await SummaryOfSuppliers_Clients('supplier');
+    let clients_S = await SummaryOfSuppliers_Clients('client');
+
     let query = req.query;
     let newQuery = {}
 
@@ -105,10 +117,13 @@ return res.render('dailyAgenda',{
         suppliers:supplier,
         clients:client,
         invoices:invoice,
+        suppliersSummary : suppliers_S,
+        clienstsSummary : clients_S,
         Pages:Math.ceil(count / perPage),
         current: page,
         query:query,
-        search:req._parsedOriginalUrl.search
+        search:req._parsedOriginalUrl.search,
+
     })
 }catch(e){
 }
