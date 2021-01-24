@@ -17,20 +17,20 @@
           <!-- invoices -->
        
       
-          
+          <%for(i of suppliersSummary){%>
             <tr>
               <th scope="row"> 1 </th>
-              <td>محمد سيد</td>
-              <td>150000</td>
-              <td>90000</td>
-              <td>60000</td>
+              <td><%=i.name%></td>
+              <td><%=i.DebtorAccount%></td>
+              <td><%=i.CreditorAccount%></td>
+              <td><%=i.TheNet%></td>
             </tr>
-           
+           <%}%>
 
         </tbody>
       </table>
 </div>
 
 <script>
-   
+ 
 </script>
