@@ -5,62 +5,57 @@
       <label for="basic-url" class="form-label">انشاء فاتورة جديدة </label>
 
       <div class="input-group mb-3">
-            <span class="input-group-text form-input" id="basic-addon3">الصنف</span>
-            <div class="col-md-4">
-              <select id="inputItem" class="form-select" name="selectItem">
-                <%for(i of items){%>
-                  <option value="<%=i._id%>"><%=i.name%></option>
-                  <%}%>
-              </select>
-            </div>
+            <span class="input-group-text form-input">رقم الفاتورة</span>
+            <input class="form-control invoiceNumber" type="number" id="invoiceNumber" name="invoiceNumber">
             
             <span class="input-group-text form-input">التاريخ</span>
             <input class="form-control date" type="date" id="date" name="date">
         </div>
         <div class="input-group mb-3">
-              <label id="date-error" class="error" for="date"></label>
+          <label id="date-error" class="error" for="date"></label>
         </div>
         
-        <div class="input-group mb-3 form-input">
-          
-            <span class="input-group-text">شرح القيد</span>
-        
-            <input type="text" class="form-control" placeholder="" id="ExplainTheLimitation" aria-label="" name="ExplainTheLimitation">
-          
+          <div class="input-group mb-3 form-input">
+                 <span class="input-group-text">حساب المدين</span>
+                 <!-- <input style="display: inline;" id="DebtorAccountInput" type="text" placeholder="تصفية..."> -->
+
+                <select class="form-select " id="DebtorAccount" name="DebtorAccount"data-show-subtext="true" data-live-search="true" >
+                  <option value="" disabled selected>اختيار حساب المدين</option>
+                  <optgroup label="الدليل المحاسبي" data-max-options="1">
+                    <%for(i of guides){%>
+                        <option value="<%=i._id%>"><%=i.name%></option>
+                    <%}%>
+                  </optgroup>
+
+                  <optgroup label="الموردون" data-max-options="1">
+                    <%for(i of suppliers){%>
+                        <option value="<%=i._id%>"><%=i.name%></option>
+                    <%}%>
+                  </optgroup>
+
+                    <optgroup label="العملاء" data-max-options="1">
+                    <%for(i of clients){%>
+                        <option value="<%=i._id%>"><%=i.name%></option>
+                    <%}%>
+                  </optgroup>
+                  
+                    <optgroup label="الموظفين" data-max-options="1">
+                    <%for(i of employees){%>
+                        <option value="<%=i._id%>"><%=i.name%></option>
+                    <%}%>
+                  </optgroup>
+
+                    <optgroup label="التكلفة" data-max-options="1">
+                    <%for(i of costs){%>
+                        <option value="<%=i._id%>"><%=i.name%></option>
+                    <%}%>
+                  </optgroup>
+                </select>
+                <label id="DebtorAccount-error" class="error" for="DebtorAccount"></label>
             
-        </div>
-        <div class="input-group mb-3">
-          <label id="ExplainTheLimitation-error" class="error" for="ExplainTheLimitation"></label>
-        </div>
-
-
-
-        <div class="input-group mb-3 form-input">
-
-              <span class="input-group-text" id="spam-count">العدد</span>
-              <input type="number" min="1" class="form-control"   id="count" placeholder="" name="count" aria-label="">
-            
-              <span class="input-group-text">السعر</span>
-              <input type="text" class="form-control" placeholder=""  id="price" name="price" aria-label="" >
-          
-              <span class="input-group-text">الاجمالي</span>
-              <input type="text" readonly  id="Total" class="form-control" placeholder="" aria-label="">
-        </div>
-        <div class="input-group mb-3">
-          <label id="count-error" class="error" for="count"></label>
-          <label id="price-error" class="error" for="price"></label>
-        </div>
-
-
-
-
-        <div class="input-group mb-4 form-input">
-        
-              <span class="input-group-text">حساب المدين</span>
-          
-          
-              <select class="form-select" id="DebtorAccount" name="DebtorAccount">
-                <optgroup label="الدليل المحاسبي" data-max-options="1">
+              <span class="input-group-text">حساب الدائن</span>
+                <select  class="form-select" id="CreditorAccount" name="CreditorAccount">
+                  <optgroup label="الدليل المحاسبي" data-max-options="1">
                   <%for(i of guides){%>
                       <option value="<%=i._id%>"><%=i.name%></option>
                   <%}%>
@@ -89,51 +84,133 @@
                       <option value="<%=i._id%>"><%=i.name%></option>
                   <%}%>
                 </optgroup>
-              </select>
-              <label id="DebtorAccount-error" class="error" for="DebtorAccount"></label>
-          
-          
-            <span class="input-group-text">حساب الدائن</span>
-              <select  class="form-select" id="CreditorAccount" name="CreditorAccount">
-                <optgroup label="الدليل المحاسبي" data-max-options="1">
-                <%for(i of guides){%>
-                    <option value="<%=i._id%>"><%=i.name%></option>
-                <%}%>
-              </optgroup>
+                </select>
+        </div>
+        <div class="input-group mb-3 form-input">
+               <label id="CreditorAccount-error" class="error" for="CreditorAccount"></label>
+        </div>
 
-              <optgroup label="الموردون" data-max-options="1">
-                <%for(i of suppliers){%>
-                    <option value="<%=i._id%>"><%=i.name%></option>
-                <%}%>
-              </optgroup>
 
-                <optgroup label="العملاء" data-max-options="1">
-                <%for(i of clients){%>
-                    <option value="<%=i._id%>"><%=i.name%></option>
-                <%}%>
-              </optgroup>
-              
-                <optgroup label="الموظفين" data-max-options="1">
-                <%for(i of employees){%>
-                    <option value="<%=i._id%>"><%=i.name%></option>
-                <%}%>
-              </optgroup>
-
-                <optgroup label="التكلفة" data-max-options="1">
-                <%for(i of costs){%>
-                    <option value="<%=i._id%>"><%=i.name%></option>
-                <%}%>
-              </optgroup>
-              </select>
+    
+        <div class="input-group mb-3 form-input">
           
+            <span class="input-group-text">شرح القيد</span>
+        
+            <input type="text" class="form-control" placeholder="" id="ExplainTheLimitation" aria-label="" name="ExplainTheLimitation">
+          
+            
+        </div>
+        <div class="input-group mb-3">
+          <label id="ExplainTheLimitation-error" class="error" for="ExplainTheLimitation"></label>
+        </div>
+
+
+      <!-- Previes -->
+   <!--      <div class="input-group mb-3 form-input">
+
+              <span class="input-group-text  " id="basic-addon3">الصنف</span>
+              <div class="col-md-2">
+                <select id="inputItem" class="form-select" name="selectItem">
+                  <%for(i of items){%>
+                    <option value="<%=i._id%>"><%=i.name%></option>
+                    <%}%>
+                </select>
+              </div>
+
+              <span class="input-group-text" id="spam-count">العدد</span>
+              <input type="number" min="1" class="form-control"   id="count" placeholder="" name="count" aria-label="">
+            
+              <span class="input-group-text">السعر</span>
+              <input type="text" class="form-control" placeholder=""  id="price" name="price" aria-label="" >
+          
+              <span class="input-group-text">نسبةالخصم</span>
+              <input type="text" class="form-control" placeholder=""  id="Descound" name="Descound" aria-label="" >
+          
+              <span class="input-group-text">السعر قبل الخصم</span>
+              <input type="text" readonly  id="TotalBeforeDescound" name="TotalBeforeDescound" class="form-control" placeholder="" aria-label="">
+          
+              <span class="input-group-text">السعر بعد الخصم</span>
+              <input type="text" readonly  id="TotalAfterDescound" name="TotalAfterDescound" class="form-control" placeholder="" aria-label=""> 
+        </div>
+      -->
+        <div class="input-group mb-3">
+          <label id="count-error" class="error" for="count"></label>
+          <label id="price-error" class="error" for="price"></label>
+        </div>
+
+      <!--Start  -->
+
+
+
+      <div class="row rowItems">
+
+        <div class="col-sm">
+          <div id="spam-item">
+          <span class="input-group-text columnsItems  " id="basic-addon3">الصنف</span>
+              <div class=" ">
+                <select id="inputItem" class="form-select div_column" name="selectItem[]">
+                  <option value="">اختيار صنف</option>
+                  <%for(i of items){%>
+                    <option value="<%=i._id%>"><%=i.name%></option>
+                    <%}%>
+                </select>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-sm">
+          <div  id="spam-count">
+            <span class="input-group-text columnsItems" >العدد</span>
+            <input type="number" min="1" class="form-control div_column"   id="count" placeholder="" name="count[]" aria-label="">
+          </div>
+        </div>
+
+        <div class="col-sm">
+          <div  id="spam-price">
+            <span class="input-group-text columnsItems">السعر</span>
+            <input type="text" class="form-control div_column" placeholder=""  id="price" name="price[]" aria-label="" >
+          </div>
+        </div>
+
+        <div class="col-sm">
+          <div id="spam-Descound">
+            <span class="input-group-text columnsItems" >نسبةالخصم</span>
+              <input type="text" class="form-control div_column" placeholder=""  id="Descound" name="descound[]" aria-label="" >
+          </div>
+        </div>
+
+        <div class="col-sm">
+          <div id="spam-TotalBeforeDescound">
+            <span class="input-group-text columnsItems"  >السعر قبل الخصم</span>
+              <input type="text" readonly  id="TotalBeforeDescound" name="TotalBeforeDescound[]" class="form-control div_column" placeholder="" aria-label="">
+          </div>
+        </div>
+        
+        <div class="col-sm">
+          <div id="spam-TotalAfterDescound">
+            <span class="input-group-text columnsItems" >السعر بعد الخصم</span>
+              <input type="text" readonly  id="TotalAfterDescound" name="TotalAfterDescound[]" class="form-control div_column" placeholder="" aria-label="">
+          </div>
+        </div>
+        <div id="Count_Price_error"></div>
+        <input type="button" onclick="AddRowItem()" class="btn btn-outline-dark   " value="اضافة عنصر" name="" id="">
+
       </div>
-      <div class="input-group mb-3 form-input">
-        <label id="CreditorAccount-error" class="error" for="CreditorAccount"></label>
-      </div>
 
-      <input type="submit" class="btn btn-primary" value="انشاء" name="" id="">
+
+
+
+      <!--End  -->
+
+      <input type="submit" class="btn btn-outline-warning   " value="انشاء" name="" id="">
     
       </div>
 
 </form>
+
+
 </div>
+
+
+
+

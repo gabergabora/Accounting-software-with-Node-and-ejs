@@ -2,11 +2,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const secret = 'This Is Any Secret Key To Encrypt Mu Data';
 const userModel = require("../models/users.model");
-const cost_centerModal = require("../Models/cost_center.model")
-const itemModal = require("../Models/item.model")
-const employeesModal = require("../Models/employees.model")
-const suppliersModal = require("../Models/supplier.model");
-const clientsModal   = require("../Models/clients.model");
 const accounting_guideModel = require('../Models/accounting_guide.model')
 const invoicesModal = require('../Models/invoices.modal');
 
@@ -95,7 +90,7 @@ var supplier = await accounting_guideModel.find({type:'supplier'}).exec();
 var client  = await accounting_guideModel.find({type:'client'}).exec();
 
 
-let count = await invoicesModal.countDocuments()
+let count = await invoicesModal.countDocuments(newQuery)
 var perPage = 50 ;
 var page = (req.params.curentPage <=0)?1:req.params.curentPage || 1;
 var invoice = await invoicesModal.find(newQuery)
@@ -105,6 +100,7 @@ var invoice = await invoicesModal.find(newQuery)
 .populate('CreditorAccount')
 .skip((perPage * page) - perPage)
 .limit(perPage)
+
 
 return res.render('dailyAgenda',{
         title:'دفتر اليومية',
@@ -134,21 +130,29 @@ return res.render('dailyAgenda',{
 
 exports.AddInvoice = async (req,res) => {
 try {
-    var invoiceN = await invoicesModal.find({}).sort({_id:-1}).limit(1) ;
+    let data = req.body;
+    console.log(data)
+
+    var invoiceRegistration = await invoicesModal.find({}).sort({_id:-1}).limit(1) ;
+    var invoiceN = await invoicesModal.findOne({invoiceNumber:data.invoiceNumber});
+
+    if(invoiceN) return  res.status(200).json({status:false,msg:'عذرا رقم هذة الفاتورة موجود بالفعل !'})
     
     var n = 10;
-    if(invoiceN.length !=0) n = invoiceN.pop().invoiceNumber +10;
-
-    let data = req.body;
+    if(invoiceRegistration.length !=0) n = invoiceRegistration.pop().RegistrationNumber +10;
 
     let invoice = new invoicesModal({
-    invoiceNumber : n ,
+        RegistrationNumber : n ,
+        invoiceNumber : data.invoiceNumber ,
         item: data.item,
         date    :data.date,
         ExplainTheLimitation : data.ExplainTheLimitation,
         count   :data.count,
         price   : data.price,
-        Total : data.Total,
+        descound : data.Descound,
+        TotalBeforeDescound : data.TotalBeforeDescound,
+        TotalAfterDescound : data.TotalAfterDescound,
+        // Total : data.Total,
         DebtorAccount       :data.DebtorAccount,
         CreditorAccount     :data.CreditorAccount,
     })
@@ -175,7 +179,9 @@ try{
      getInvoice.CreditorAccount      = invoice.CreditorAccount;
      getInvoice.count                    = invoice.count;
      getInvoice.price                    = invoice.price;
-     getInvoice.Total                    = invoice.Total;
+     getInvoice.descound                    = invoice.descound;
+     getInvoice.TotalBeforeDescound    = invoice.TotalBeforeDescound;
+     getInvoice.TotalAfterDescound                    = invoice.TotalAfterDescound;
 
      let saveingInvoice = await getInvoice.save()
     

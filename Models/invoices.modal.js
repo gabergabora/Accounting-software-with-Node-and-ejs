@@ -3,6 +3,7 @@ const Schema   = mongoose.Schema;
 
 
 let invoice = new Schema({
+    RegistrationNumber:Number,
     invoiceNumber : Number,
     item:{
         type:Schema.ObjectId,
@@ -12,6 +13,9 @@ let invoice = new Schema({
     ExplainTheLimitation: String,
     count:Number,
     price:Number,
+    descound : Number,
+    TotalBeforeDescound : Number,
+    TotalAfterDescound : Number,
     Total:Number,
     DebtorAccount   : {
                         type:Schema.ObjectId,

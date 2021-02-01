@@ -13,6 +13,7 @@ let db_url = 'mongodb://localhost:27017/Accounting';
 
 const flash = require("connect-flash");
 
+
 const server = require("http").createServer(app);
 var io = require('socket.io')(server);
 const axios = require('axios');
@@ -62,8 +63,12 @@ app.use('/accounting',accounting_route)
 app.get('/*',(req,res)=>{
     res.render('404',{title:'Not found',p:'This page not found!'})
 })
-let hostname = 'localhost' ||'192.168.1.6'
+
+
+let hostname = 'localhost' || '192.168.1.4'
+// let hostname = '192.168.1.4' || 'localhost'
 
 server.listen(port,hostname ,()=>{
     console.log('Server is running on port  : ' + port);
 })
+

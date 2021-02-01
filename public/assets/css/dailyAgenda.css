@@ -1,9 +1,15 @@
 .FormTable{
+    color: black;
+    font-size: 24px;
+    background-color: #787878;
     border :1px solid #ddd;
     padding : 20px;
-    width: 70%;
+    width: 100%;
     margin: auto;
     margin-top: 30px;
+}
+.form-control , .form-select{
+    background-color: #d9ded3;
 }
 .bor{
     border:1px solid blue;
@@ -55,8 +61,18 @@ color: antiquewhite;
 .rowTwo{
 margin-right: 16.4%;
 }
-
-
+.rowItems{
+margin-bottom: 25px;
+}
+.columnsItems{
+margin-bottom: 12px
+}
+.div_column{
+margin-bottom: 18px;
+}
+.error{
+color: #860101;
+}
 
 .alert-notInvoices{
 margin-top: 30px !important

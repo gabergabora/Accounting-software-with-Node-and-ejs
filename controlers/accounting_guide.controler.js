@@ -3,11 +3,6 @@ const bcrypt = require("bcrypt");
 const secret = 'This Is Any Secret Key To Encrypt Mu Data';
 const userModel = require("../models/users.model");
 const accounting_guideModel = require("../Models/accounting_guide.model")
-const cost_center = require("../Models/cost_center.model")
-const ITEMS = require("../Models/item.model")
-const EMPLOYEES = require("../Models/employees.model")
-const SUPPLIERS = require("../Models/supplier.model");
-const CLIENTS   = require("../Models/clients.model");
 
 
 
