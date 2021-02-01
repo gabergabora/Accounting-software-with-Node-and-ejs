@@ -43,6 +43,7 @@ border: 1px solid #0c5fda;
 margin:auto;
 width:100%;
 margin-top: 22px;
+margin-right: 10px;
 }
 .breadcrumbs{
 background-color: #becde475;
@@ -205,6 +206,11 @@ margin-right: 40px;
 margin:auto;
 width:100%;
 margin-right: 0px;
+margin-right: 10px; 
+margin-right: auto;
+}
+.Model-btn{
+margin-top: 36px;
 }
 .thiredtable{
     margin-left: 0px;
@@ -257,6 +263,7 @@ margin-right: 0px;
     }
     .container{
         margin-right: 0px;
+        margin-right: auto;
     }
     .thiredtable{
         margin-left: 0px;
@@ -296,7 +303,7 @@ margin-right: 20px;
     }
 .tablesAll{
 margin: auto;
-margin-top: 174px;
+margin-top: 140px;
 width: 100%;
 }
 /* #a3abb1 -  rgb(158 86 86 / 60%) */

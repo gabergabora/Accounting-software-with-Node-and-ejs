@@ -146,7 +146,8 @@ var dataArray = {}
 for (var i = 0; i < count.length; i++) { 
     var a = count[i].value;
     if(a =='' || a <0) return $('#Count_Price_error').append(`<div style='color:red;'>رجاء تأكد ان العدد و السعر و نسبة الخصم قيم صحيحة !</div>`);
-    console.log(a)  
+    console.log(a)
+
 } 
 
 // for (var i = 0; i < price.length; i++) { 

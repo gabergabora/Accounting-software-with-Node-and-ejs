@@ -1,7 +1,16 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const secret = 'This Is Any Secret Key To Encrypt Mu Data';
+<<<<<<< HEAD
 const userModel = require("../models/users.model");
+=======
+const userModel = require("../Models/users.model");
+const cost_centerModal = require("../Models/cost_center.model")
+const itemModal = require("../Models/item.model")
+const employeesModal = require("../Models/employees.model")
+const suppliersModal = require("../Models/supplier.model");
+const clientsModal   = require("../Models/clients.model");
+>>>>>>> 135cb9fad54a311bf37bc67815436692b3e35c17
 const accounting_guideModel = require('../Models/accounting_guide.model')
 const invoicesModal = require('../Models/invoices.modal');
 

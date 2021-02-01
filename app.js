@@ -8,9 +8,8 @@ const port = 8080 ;
 const app = express();
 const path = require("path");
 const db = mongoose.connection;
-let db_url = 'mongodb://localhost:27017/Accounting';
 // let db_url = 'mongodb+srv://ahmed_fouad:12345Aa@cluster0.tpy6v.mongodb.net/<dbname>?retryWrites=true&w=majority'
-
+let db_url = 'mongodb://localhost:27017/Accounting'
 const flash = require("connect-flash");
 
 
@@ -41,7 +40,7 @@ mongoose.set('useCreateIndex', true);
 mongoose.connect(db_url, {
     useNewUrlParser: true,
     useFindAndModify: false,
-    useUnifiedTopology: true 
+    useUnifiedTopology: true
 });
 mongoose.Promise = global.Promise;
 db.on("error", console.error.bind(console, "MongoDB Error !!!"));

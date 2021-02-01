@@ -131,6 +131,7 @@ margin-right: 44%; */
 .container{
 margin-right: 10px;
 margin-left: 10px;
+margin-right: auto;
 }
 .FormTable{
 width: 100%;
@@ -141,6 +142,7 @@ width: 100%;
 .container{
 margin-right:  0px;
 margin-left:  0px;
+margin-right: auto;
 }
 .FormTable{
 width: 100%;
