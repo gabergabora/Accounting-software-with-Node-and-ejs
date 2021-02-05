@@ -55,6 +55,8 @@
             
               <span class="input-group-text">حساب الدائن</span>
                 <select  class="form-select" id="CreditorAccount" name="CreditorAccount">
+                  <option value="" disabled selected>اختيار حساب الدائن</option>
+
                   <optgroup label="الدليل المحاسبي" data-max-options="1">
                   <%for(i of guides){%>
                       <option value="<%=i._id%>"><%=i.name%></option>
@@ -133,17 +135,16 @@
               <input type="text" readonly  id="TotalAfterDescound" name="TotalAfterDescound" class="form-control" placeholder="" aria-label=""> 
         </div>
       -->
-        <div class="input-group mb-3">
+        <!-- <div class="input-group mb-3">
           <label id="count-error" class="error" for="count"></label>
           <label id="price-error" class="error" for="price"></label>
-        </div>
+        </div> -->
 
       <!--Start  -->
 
 
 
       <div class="row rowItems">
-
         <div class="col-sm">
           <div id="spam-item">
           <span class="input-group-text columnsItems  " id="basic-addon3">الصنف</span>
@@ -162,6 +163,7 @@
           <div  id="spam-count">
             <span class="input-group-text columnsItems" >العدد</span>
             <input type="number" min="1" class="form-control div_column"   id="count" placeholder="" name="count[]" aria-label="">
+            <!-- <label id="count-error" class="error" for="count"></label> -->
           </div>
         </div>
 
@@ -169,6 +171,7 @@
           <div  id="spam-price">
             <span class="input-group-text columnsItems">السعر</span>
             <input type="text" class="form-control div_column" placeholder=""  id="price" name="price[]" aria-label="" >
+            <!-- <label id="price-error" class="error" for="price"></label> -->
           </div>
         </div>
 
@@ -193,16 +196,19 @@
           </div>
         </div>
         <div id="Count_Price_error"></div>
-        <input type="button" onclick="AddRowItem()" class="btn btn-outline-dark   " value="اضافة عنصر" name="" id="">
-
+       
+          <div class="col">
+                <input type="button" onclick="AddRowItem()" class="btn btn-dark" value="اضافة عنصر">
+              <input type="button" onclick="RemoveRowItem()" class="btn btn-danger" value="ازالة عنصر">
+              <input type="button" onclick="CalculateABToTal()" class="btn btn-success" value="أحسب الاجمالي بعد و قبل الخصم">
+          </div>
+    
       </div>
-
-
 
 
       <!--End  -->
 
-      <input type="submit" class="btn btn-outline-warning   " value="انشاء" name="" id="">
+      <input type="submit" class="btn btn-warning   " value="انشاء">
     
       </div>
 

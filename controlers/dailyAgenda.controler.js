@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const secret = 'This Is Any Secret Key To Encrypt Mu Data';
-const userModel = require("../models/users.model");
+const userModel = require("../Models/users.model");
 const accounting_guideModel = require('../Models/accounting_guide.model')
 const invoicesModal = require('../Models/invoices.modal');
 
@@ -15,15 +15,11 @@ var suppliers = []
 for (i of supps ){
 var invpices_DebtorAccount   = await invoicesModal.find({DebtorAccount:i._id}).populate('DebtorAccount')
 var invpices_CreditorAccount   = await invoicesModal.find({CreditorAccount:i._id}).populate('CreditorAccount')
-
-
 var sup = {}
 var TotalD = 0
 var TotalC = 0
-
 // save name of supplier 
 sup.name  = i.name
-
 // DebtorAccount
 if(invpices_DebtorAccount.length !=0){
     for(x of invpices_DebtorAccount){
@@ -95,13 +91,13 @@ var perPage = 50 ;
 var page = (req.params.curentPage <=0)?1:req.params.curentPage || 1;
 var invoice = await invoicesModal.find(newQuery)
 .sort({_id:-1})
-.populate('item')
+.populate('items.item')
 .populate('DebtorAccount') // , ongoing :true
 .populate('CreditorAccount')
 .skip((perPage * page) - perPage)
 .limit(perPage)
 
-
+console.log(invoice)
 return res.render('dailyAgenda',{
         title:'دفتر اليومية',
         user:req.userData.user,
@@ -131,12 +127,16 @@ return res.render('dailyAgenda',{
 exports.AddInvoice = async (req,res) => {
 try {
     let data = req.body;
+    console.log("---------------------------------------------------------------------")
     console.log(data)
 
-    var invoiceRegistration = await invoicesModal.find({}).sort({_id:-1}).limit(1) ;
-    var invoiceN = await invoicesModal.findOne({invoiceNumber:data.invoiceNumber});
-
-    if(invoiceN) return  res.status(200).json({status:false,msg:'عذرا رقم هذة الفاتورة موجود بالفعل !'})
+    var invoiceRegistration = await invoicesModal.find({}).sort({_id:-1}).limit(1);
+   
+    if(data.invoiceNumber.trim() != ''){
+        var invoiceN = await invoicesModal.findOne({invoiceNumber:data.invoiceNumber});
+        if(invoiceN) return  res.status(200).json({status:false,msg:'عذرا رقم هذة الفاتورة موجود بالفعل !'})
+    }
+    
     
     var n = 10;
     if(invoiceRegistration.length !=0) n = invoiceRegistration.pop().RegistrationNumber +10;
@@ -144,15 +144,9 @@ try {
     let invoice = new invoicesModal({
         RegistrationNumber : n ,
         invoiceNumber : data.invoiceNumber ,
-        item: data.item,
         date    :data.date,
         ExplainTheLimitation : data.ExplainTheLimitation,
-        count   :data.count,
-        price   : data.price,
-        descound : data.Descound,
-        TotalBeforeDescound : data.TotalBeforeDescound,
-        TotalAfterDescound : data.TotalAfterDescound,
-        // Total : data.Total,
+        items:data.items,
         DebtorAccount       :data.DebtorAccount,
         CreditorAccount     :data.CreditorAccount,
     })
@@ -169,23 +163,24 @@ try {
 exports.EditeInvoice = async (req,res) => {
 try{
     let invoice = req.body;
-
+    console.log(invoice)
     let getInvoice = await invoicesModal.findOne({_id:invoice._id});
    
      getInvoice.date                     = invoice.date;
-     getInvoice.item                 = invoice.item;
      getInvoice.ExplainTheLimitation     = invoice.ExplainTheLimitation;
      getInvoice.DebtorAccount        = invoice.DebtorAccount;
      getInvoice.CreditorAccount      = invoice.CreditorAccount;
-     getInvoice.count                    = invoice.count;
-     getInvoice.price                    = invoice.price;
-     getInvoice.descound                    = invoice.descound;
-     getInvoice.TotalBeforeDescound    = invoice.TotalBeforeDescound;
-     getInvoice.TotalAfterDescound                    = invoice.TotalAfterDescound;
+     getInvoice.items                = invoice.items;   
+    //  getInvoice.item                 = invoice.item;
+    //  getInvoice.count                    = invoice.count;
+    //  getInvoice.price                    = invoice.price;
+    //  getInvoice.descound                    = invoice.descound;
+    //  getInvoice.TotalBeforeDescound    = invoice.TotalBeforeDescound;
+    //  getInvoice.TotalAfterDescound                    = invoice.TotalAfterDescound;
 
      let saveingInvoice = await getInvoice.save()
     
-    let getNewInvoice = await invoicesModal.findOne({_id:invoice._id}).populate('item').populate('DebtorAccount').populate('CreditorAccount');
+    let getNewInvoice = await invoicesModal.findOne({_id:invoice._id}).populate('items.item').populate('DebtorAccount').populate('CreditorAccount');
 
     return res.status(200).json({status:true,msg:'تم تعديل الفاتورة بنجاح', invoice:getNewInvoice});
     

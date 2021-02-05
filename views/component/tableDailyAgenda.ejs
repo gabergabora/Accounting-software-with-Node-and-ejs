@@ -1,3 +1,4 @@
+
 <div  style="overflow-x:auto;">
     <table class="table table-hover">
         <thead>
@@ -7,13 +8,13 @@
             <th scope="col">رقم الفاتورة</th>
             <th scope="col">التاريخ</th>
             <!-- <th scope="col">عدد الاصناف</th> -->
-            <th scope="col">الصنف</th>
-            <th scope="col">شرح القيد</th>
-            <th scope="col">العدد</th>
-            <th scope="col">السعر</th>
-            <th scope="col">نسبةالخصم</th>
-            <th scope="col">السعر ق/الخصم</th>
-            <th scope="col">السعر ب/الخصم</th>
+            <th scope="col">عدد الاصناف</th>
+            <!-- <th scope="col">شرح القيد</th>
+                 <th scope="col">العدد</th>
+                 <th scope="col">السعر</th>
+                 <th scope="col">نسبةالخصم</th>
+                 <th scope="col">السعر ق/الخصم</th>
+                 <th scope="col">السعر ب/الخصم</th> -->
             <th scope="col">حساب المدين</th>
             <th scope="col">حساب الدائن</th>
             <th scope="col">تعديل او حذف</th>
@@ -32,16 +33,8 @@
               <% let invoiceDateE = new Date(invoices[i].date).toISOString().slice(0,10) %>
               <td id="invoiceDate_<%=invoices[i]._id%>"> <%= invoiceDateE%>  </td>
 
-              <td id="invoiceItem_<%=invoices[i]._id%>"> <%=invoices[i].item.name%></td>
-              <td id="invoiceExplainTheLimitation_<%=invoices[i]._id%>"> <%=invoices[i].ExplainTheLimitation%></td>
-              
-              <td id="invoiceCount_<%=invoices[i]._id%>"> <%=invoices[i].count%></td>
-              <td id="invoicePrice_<%=invoices[i]._id%>"> <%=invoices[i].price%></td>
-              <td id="invoiceDescound_<%=invoices[i]._id%>"> <%= Number(invoices[i].descound * 100) %>  </td>
-              <td id="invoiceTotalBeforeDescound_<%=invoices[i]._id%>"> <%=invoices[i].TotalBeforeDescound%></td>
-              <td id="invoiceTotalAfterDescound_<%=invoices[i]._id%>"> <%=invoices[i].TotalAfterDescound%></td>
-
-
+              <td id="itemsLength_<%=invoices[i]._id%>"> <%= invoices[i].items.length%> </td>
+            
               <td id="invoiceDebtorAccount_<%=invoices[i]._id%>"> <%=invoices[i].DebtorAccount.name%></td>
               <td id="invoiceCreditorAccount_<%=invoices[i]._id%>"> <%=invoices[i].CreditorAccount.name%></td>
             
@@ -77,145 +70,150 @@
                             </div>
                           </div>
 
-
                           <div class="input-group mb-3 form-input">
                               <label for="invoices_date" class="input-group-text ">التاريخ</label>
                               <% let invoiceDate = new Date(invoices[i].date).toISOString().slice(0,10) %>
                               <input type="date" value="<%=invoiceDate %>" id="date_<%=invoices[i]._id%>"  class="form-control" name="invoices_date">
                           </div>
-                          
-
-                    <div class="input-group mb-3 form-input">
-                          <label for="invoices_item" class="input-group-text">الصنف</label>
-                            
-                          <select id="inputItem_<%=invoices[i]._id%>" class="form-select" name="selectItem"  data-live-search="true">
-                            <option  selected value='<%=invoices[i].item._id%>' > <%=invoices[i].item.name%> </option>
-                            <%for(x of items){%>
-                              <option value="<%=x._id%>"><%=x.name%></option>
-                              <%}%>
-                          </select>
-                    </div>
-          
-
-                    <div class="input-group mb-3 form-input">
-                      <label for="invoices_ExplainTheLimitation" class="input-group-text">شرح القيد</label>
-                      <input type="text" id="ExplainTheLimitation_<%=invoices[i]._id%>" value="<%=invoices[i].ExplainTheLimitation%>"  class="form-control" name="invoices_ExplainTheLimitation">
-                    </div>
-                    <span class="ExplainTheLimitation_error_<%=invoices[i]._id%>"></span>
-
-
                     
-                    <div class="input-group mb-3 form-input">             
+                          <div class="input-group mb-3 form-input">             
           
-                      <label for="oldDebtorAccount_<%=invoices[i]._id%>" class="input-group-text">حساب المدين</label>
-                        
-                      <select class="form-select" id="DebtorAccount_<%=invoices[i]._id%>" name="DebtorAccount_<%=invoices[i]._id%>">
-                        <option  selected value='<%=invoices[i].DebtorAccount._id%>' > <%=invoices[i].DebtorAccount.name%> </option>
+                            <label for="oldDebtorAccount_<%=invoices[i]._id%>" class="input-group-text">حساب المدين</label>
+                              
+                            <select class="form-select" id="DebtorAccount_<%=invoices[i]._id%>" name="DebtorAccount_<%=invoices[i]._id%>">
+                              <option  selected value='<%=invoices[i].DebtorAccount._id%>' > <%=invoices[i].DebtorAccount.name%> </option>
+      
+                              <optgroup label="الدليل المحاسبي" data-max-options="1">
+                                <%for(w of guides){%>
+                                  <option value="<%=w._id%>"><%=w.name%></option>
+                                <%}%>
+                              </optgroup>
+            
+                              <optgroup label="الموردون" data-max-options="1">
+                                <%for(e of suppliers){%>
+                                  <option value="<%=e._id%>"><%=e.name%></option>
+                                <%}%>
+                              </optgroup>
+            
+                                <optgroup label="العملاء" data-max-options="1">
+                                <%for(r of clients){%>
+                                  <option value="<%=r._id%>"><%=r.name%></option>
+                                <%}%>
+                              </optgroup>
+                              
+                                <optgroup label="الموظفين" data-max-options="1">
+                                <%for(t of employees){%>
+                                    <option value="<%=t._id%>"><%=t.name%></option>
+                                <%}%>
+                              </optgroup>
+            
+                                <optgroup label="التكلفة" data-max-options="1">
+                                <%for(y of costs){%>
+                                    <option value="<%=y._id%>"><%=y.name%></option>
+                                <%}%>
+                              </optgroup>
+                            </select>
+                            <label  class="DebtorAccount_error_<%=invoices[i]._id%>" for="DebtorAccount"></label>
+                          </div>
+      
+                          <div class="input-group mb-3 form-input">             
+                
+                            <label for="oldCreditorAccount_<%=invoices[i]._id%>" class="input-group-text">حساب دائن</label>
+                              
+                            <select class="form-select" id="CreditorAccount_<%=invoices[i]._id%>" name="CreditorAccount_<%=invoices[i]._id%>">
+                              <option  selected value='<%=invoices[i].CreditorAccount._id%>' > <%=invoices[i].CreditorAccount.name%> </option>
+                              <optgroup label="الدليل المحاسبي" data-max-options="1">
+                                <%for(w of guides){%>
+                                  <option value="<%=w._id%>"><%=w.name%></option>
+                                <%}%>
+                              </optgroup>
+            
+                              <optgroup label="الموردون" data-max-options="1">
+                                <%for(e of suppliers){%>
+                                  <option value="<%=e._id%>"><%=e.name%></option>
+                                <%}%>
+                              </optgroup>
+            
+                                <optgroup label="العملاء" data-max-options="1">
+                                <%for(r of clients){%>
+                                  <option value="<%=r._id%>"><%=r.name%></option>
+                                <%}%>
+                              </optgroup>
+                              
+                                <optgroup label="الموظفين" data-max-options="1">
+                                <%for(t of employees){%>
+                                    <option value="<%=t._id%>"><%=t.name%></option>
+                                <%}%>
+                              </optgroup>
+            
+                                <optgroup label="التكلفة" data-max-options="1">
+                                <%for(y of costs){%>
+                                    <option value="<%=y._id%>"><%=y.name%></option>
+                                <%}%>
+                              </optgroup>
+                            </select>
+                          </div>
+                          <spam  class="CreditorAccount_error_<%=invoices[i]._id%>" ></spam>
 
-                        <optgroup label="الدليل المحاسبي" data-max-options="1">
-                          <%for(w of guides){%>
-                            <option value="<%=w._id%>"><%=w.name%></option>
-                          <%}%>
-                        </optgroup>
-      
-                        <optgroup label="الموردون" data-max-options="1">
-                          <%for(e of suppliers){%>
-                            <option value="<%=e._id%>"><%=e.name%></option>
-                          <%}%>
-                        </optgroup>
-      
-                          <optgroup label="العملاء" data-max-options="1">
-                          <%for(r of clients){%>
-                            <option value="<%=r._id%>"><%=r.name%></option>
-                          <%}%>
-                        </optgroup>
-                        
-                          <optgroup label="الموظفين" data-max-options="1">
-                          <%for(t of employees){%>
-                              <option value="<%=t._id%>"><%=t.name%></option>
-                          <%}%>
-                        </optgroup>
-      
-                          <optgroup label="التكلفة" data-max-options="1">
-                          <%for(y of costs){%>
-                              <option value="<%=y._id%>"><%=y.name%></option>
-                          <%}%>
-                        </optgroup>
-                      </select>
-                      <label  class="DebtorAccount_error_<%=invoices[i]._id%>" for="DebtorAccount"></label>
+                          <div class="input-group mb-3 form-input">
+                            <label for="invoices_ExplainTheLimitation" class="input-group-text">شرح القيد</label>
+                            <input type="text" id="ExplainTheLimitation_<%=invoices[i]._id%>" value="<%=invoices[i].ExplainTheLimitation%>"  class="form-control" name="invoices_ExplainTheLimitation">
+                          </div>
+                          <span class="ExplainTheLimitation_error_<%=invoices[i]._id%>"></span>
+  
+
+              <!-- --Start Items Of Invoice -->
+                  <div id="AddRow_<%=invoices[i]._id%>">
+                    <%for(item of invoices[i].items){%>
+                      <div class="line">_____________________________________________________</div>
+                      <br>
+                      <div class="input-group mb-3 form-input">
+                        <label for="invoices_item" class="input-group-text">الصنف</label>
+                        <select name="inputItem_<%=invoices[i]._id%>[]" class="form-select"  data-live-search="true">
+                        <option  value='delete' > حذف هذا العنصر </option>
+
+                          <option  selected value='<%=item.item._id%>' > <%=item.item.name%> </option>
+                          <%for(x of items){%>
+                            <option value="<%=x._id%>"><%=x.name%></option>
+                            <%}%>
+                        </select>
                     </div>
-
-
-                    <div class="input-group mb-3 form-input">             
-          
-                      <label for="oldCreditorAccount_<%=invoices[i]._id%>" class="input-group-text">حساب دائن</label>
-                        
-                      <select class="form-select" id="CreditorAccount_<%=invoices[i]._id%>" name="CreditorAccount_<%=invoices[i]._id%>">
-                        <option  selected value='<%=invoices[i].CreditorAccount._id%>' > <%=invoices[i].CreditorAccount.name%> </option>
-                        <optgroup label="الدليل المحاسبي" data-max-options="1">
-                          <%for(w of guides){%>
-                            <option value="<%=w._id%>"><%=w.name%></option>
-                          <%}%>
-                        </optgroup>
-      
-                        <optgroup label="الموردون" data-max-options="1">
-                          <%for(e of suppliers){%>
-                            <option value="<%=e._id%>"><%=e.name%></option>
-                          <%}%>
-                        </optgroup>
-      
-                          <optgroup label="العملاء" data-max-options="1">
-                          <%for(r of clients){%>
-                            <option value="<%=r._id%>"><%=r.name%></option>
-                          <%}%>
-                        </optgroup>
-                        
-                          <optgroup label="الموظفين" data-max-options="1">
-                          <%for(t of employees){%>
-                              <option value="<%=t._id%>"><%=t.name%></option>
-                          <%}%>
-                        </optgroup>
-      
-                          <optgroup label="التكلفة" data-max-options="1">
-                          <%for(y of costs){%>
-                              <option value="<%=y._id%>"><%=y.name%></option>
-                          <%}%>
-                        </optgroup>
-                      </select>
-                    </div>
-                    <spam  class="CreditorAccount_error_<%=invoices[i]._id%>" ></spam>
 
 
                     <div class="input-group mb-3 form-input">
                             <label for="invoices_count" class="input-group-text">العدد</label>
-                            <input type="number" id="count_<%=invoices[i]._id%>" value="<%=invoices[i].count%>"  class="form-control" name="invoices_count">
+                            <input type="number" name="count_<%=invoices[i]._id%>[]" value="<%=item.count%>"  class="form-control" >
                     </div>
 
 
                     <div class="input-group mb-3 form-input">
                             <label for="invoices_price" class="input-group-text">السعر</label>
-                            <input type="number" id="price_<%=invoices[i]._id%>"  value="<%=invoices[i].price%>"  class="form-control" name="invoices_price">
+                            <input type="number" name="price_<%=invoices[i]._id%>[]"  value="<%=item.price%>"  class="form-control" >
                     </div>
 
                     <div class="input-group mb-3 form-input">
                       <label for="invoices_descound" class="input-group-text">نسبةالخصم</label>
-                      <input type="number" id="descound_<%=invoices[i]._id%>"  value="<%= Number(invoices[i].descound * 100) %>"  class="form-control" name="invoices_descound">
+                      <input type="number" name="descound_<%=invoices[i]._id%>[]"  value="<%= Number(item.descound) *100%>"  class="form-control" >
                     </div>
 
                     <div class="input-group mb-3 form-input">
                             <label for="TotalBeforeDescound" class="input-group-text">السعر قبل الخصم</label>
-                            <input type="text" readonly  id="EditeTotalBeforeDescound_<%=invoices[i]._id%>"  value="<%=invoices[i].TotalBeforeDescound%>" class="form-control" placeholder="" aria-label="">
+                            <input type="text" readonly  name="EditeTotalBeforeDescound_<%=invoices[i]._id%>[]"  value="<%=item.TotalBeforeDescound%>" class="form-control" placeholder="" aria-label="">
                     </div>
 
                     <div class="input-group mb-3 form-input">
                       <label for="TotalAfterDescound" class="input-group-text">السعر بعد الخصم</label>
-                      <input type="text" readonly  id="EditeTotalAfterDescound_<%=invoices[i]._id%>"  value="<%=invoices[i].TotalAfterDescound%>" class="form-control" placeholder="" aria-label="">
+                      <input type="text" readonly  name="EditeTotalAfterDescound_<%=invoices[i]._id%>[]"  value="<%=item.TotalAfterDescound%>" class="form-control" placeholder="" aria-label="">
                     </div>
+                   
+                    <%}%>
+                  </div>
+          <!-- --Start Items Of Invoice -->
+                    <div class="Count_Price_error_<%=invoices[i]._id%>"></div>
+                    <input type="button" onclick="AddRowItemEdite('<%=invoices[i]._id%>')" class="btn btn-dark" value="اضافة عنصر">
                     
+                    <button  class="btn btn-success" type="button"   onclick="calculateEditeTotal('<%=invoices[i]._id%>')">احسب الاجمالي الجديد</button>
 
-                    <button  class="badge badge-dark text-dark" type="button"   onclick="calculateEditeTotal(invoices_count.value ,invoices_price.value ,invoices_descound.value,'<%=invoices[i]._id%>' )">احسب الاجمالي الجديد</button>
-
-                    <span class="Count_Price_error_<%=invoices[i]._id%>"></span>
                       </div>
                     </div>
                   
