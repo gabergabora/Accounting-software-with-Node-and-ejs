@@ -22,7 +22,7 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 
 
-
+        
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -70,4 +70,5 @@ let hostname = 'localhost' || '192.168.1.4'
 server.listen(port,hostname ,()=>{
     console.log('Server is running on port  : ' + port);
 })
+       .
 
